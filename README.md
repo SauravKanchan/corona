@@ -8,6 +8,7 @@ cd corona
 npm install
 ```
 
+Start the dev server
 ```bash
 npm run dev
 ```
