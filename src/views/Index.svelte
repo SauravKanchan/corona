@@ -20,47 +20,58 @@
   }
 </style>
 <div class="container-fluid">
+  <h1 class="h1 title text-center mt-5">COVID-19 Overview</h1>
   <div class="row mt-5">
-    <div class="col-md-12">
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <h1 class="title h1 text-center">India COVID-19 Overview</h1>
-        </div>
-        <div class="col-md-6">
-          <h3 class="h3 text-secondary text-center">{total.lastupdatedtime} </h3>
-        </div>
-      </div>
-    </div>
-    {#each overview as o}
-      <div class="col-md-3">
-        <div
-          class="text-center text-{ o.class }">
-          <h2 class="h1 mb-0">{ o.number }</h2>
-          <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
-          <p><strong>{ o.title }</strong></p>
-        </div>
-      </div>
-    {/each}
-    <div class="col-md-12">
-      <div class="row mb-3">
-        <div class="col-md-6">
-          <h1 class="title h1 text-center">Global COVID-19 Overview</h1>
-        </div>
-        <div class="col-md-6">
-          <h3 class="h3 text-secondary text-center">{global_update_date} </h3>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h1 class="title h1 text-center">India</h1>
+              </div>
+              <div class="col-md-6">
+                <h3 class="h3 text-secondary text-center">{total.lastupdatedtime} </h3>
+              </div>
+            </div>
+          </div>
+          {#each overview as o}
+            <div class="col-md-3">
+              <div
+                class="text-center text-{ o.class }">
+                <h2 class="h1 mb-0">{ o.number }</h2>
+                <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
+                <p><strong>{ o.title }</strong></p>
+              </div>
+            </div>
+          {/each}
         </div>
       </div>
-    </div>
-    {#each global_overview as o}
-      <div class="col-md-3">
-        <div class="text-center text-{ o.class }">
-          <h2 class="h1 mb-0">{ o.number }</h2>
-          <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
-          <p><strong>{ o.title }</strong></p>
-        </div>
-      </div>
-    {/each}
 
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h1 class="title h1 text-center">Global</h1>
+              </div>
+              <div class="col-md-6">
+                <h3 class="h3 text-secondary text-center">{global_update_date} </h3>
+              </div>
+            </div>
+          </div>
+          {#each global_overview as o}
+            <div class="col-md-3">
+              <div class="text-center text-{ o.class }">
+                <h2 class="h1 mb-0">{ o.number }</h2>
+                <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
+                <p><strong>{ o.title }</strong></p>
+              </div>
+            </div>
+          {/each}
+        </div>
+      </div>
+    </div>
     <div class="col-md-6 mt-3">
       <h2 class="h2 text-center mb-3">State and District Wise</h2>
       <div class="table-responsive">
@@ -207,7 +218,7 @@
       }
     ]
     let date = new Date(global.data.Date)
-    global_update_date = date.toLocaleString().replace(",","")
+    global_update_date = date.toLocaleString().replace(',', '')
 
   })()
 
