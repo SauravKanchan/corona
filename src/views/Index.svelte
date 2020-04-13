@@ -22,12 +22,12 @@
 <div class="container-fluid">
   <div class="row mt-5">
     <div class="col-md-12">
-      <div class="row">
-        <div class="col-md-8">
-          <h1 class="title h1">India COVID-19 Overview</h1>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h1 class="title h1 text-center">India COVID-19 Overview</h1>
         </div>
-        <div class="col-md-4">
-          <h3 class="h3 text-secondary">{total.lastupdatedtime} </h3>
+        <div class="col-md-6">
+          <h3 class="h3 text-secondary text-center">{total.lastupdatedtime} </h3>
         </div>
       </div>
     </div>
@@ -35,11 +35,13 @@
       <div class="col-md-3">
         <div class="text-center text-{ o.class }">
           <h2 class="h1 mb-0">{ o.number }</h2>
+          <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
           <p><strong>{ o.title }</strong></p>
         </div>
       </div>
     {/each}
-    <div class="col-md-8">
+    <div class="col-md-6 mt-3">
+      <h2 class="h2 text-center mb-3">State and District Wise</h2>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -94,6 +96,7 @@
   let total = { lastupdatedtime: '-' }
   let statewise = []
   let state_data = [];
+  let global_overview = [];
   (async () => {
     let res = await axios.get('https://api.covid19india.org/data.json')
     total = res.data.statewise[0]
@@ -102,22 +105,26 @@
       {
         number: total.confirmed,
         title: 'Confirmed',
-        class: 'danger'
+        class: 'danger',
+        delta: total.deltaconfirmed
       },
       {
         number: total.recovered,
         title: 'Recovered',
-        class: 'success'
+        class: 'success',
+        delta: total.deltarecovered
       },
       {
         number: total.active,
         title: 'Active',
-        class: 'info'
+        class: 'info',
+        delta: total.deltarecovered
       },
       {
         number: total.deaths,
         title: 'Deaths',
-        class: 'warning'
+        class: 'warning',
+        delta: total.deltadeaths
       }
     ]
 
@@ -133,6 +140,9 @@
     }
     state_data = state_data
     window.state_data = state_data
+
+    let global = await axios.get("https://api.covid19api.com/summary");
+    window.global_overview = global.data
 
   })()
 
