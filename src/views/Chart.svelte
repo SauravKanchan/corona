@@ -103,11 +103,11 @@
         label:s,
         fill: false,
         borderColor: getRandomColor(),
-        data: [],
+        data: [0],
         hidden: !whitelisted_states.includes(s)
       })
     }
-    let labels = []
+    let labels = ['']
     let cases = res.data.states_daily.filter((d) => d.status === status)
     for (let day in cases) {
       labels.push(cases[day].date)
@@ -116,7 +116,7 @@
           for(let s in datasets){
             if(datasets[s].label === states){
               // console.log("asdf",datasets[s].data, cases[day])
-              datasets[s].data.push(cases[day][states])
+              datasets[s].data.push(datasets[s].data[datasets[s].data.length -1]+parseInt(cases[day][states]))
               continue;
             }
           }
