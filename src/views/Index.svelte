@@ -40,6 +40,26 @@
         </div>
       </div>
     {/each}
+    <div class="col-md-12">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h1 class="title h1 text-center">Global COVID-19 Overview</h1>
+        </div>
+        <div class="col-md-6">
+          <h3 class="h3 text-secondary text-center">{total.lastupdatedtime} </h3>
+        </div>
+      </div>
+    </div>
+    {#each global_overview as o}
+      <div class="col-md-3">
+        <div class="text-center text-{ o.class }">
+          <h2 class="h1 mb-0">{ o.number }</h2>
+          <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
+          <p><strong>{ o.title }</strong></p>
+        </div>
+      </div>
+    {/each}
+
     <div class="col-md-6 mt-3">
       <h2 class="h2 text-center mb-3">State and District Wise</h2>
       <div class="table-responsive">
@@ -156,7 +176,34 @@
     window.state_data = state_data
 
     let global = await axios.get("https://api.covid19api.com/summary");
-    window.global_overview = global.data
+    let global_data = global.data.Global
+    console.log(global_data)
+    global_overview = [
+      {
+        number: global_data.TotalConfirmed,
+        title: 'Confirmed',
+        class: 'danger',
+        delta: global_data.NewConfirmed
+      },
+      {
+        number: global_data.TotalRecovered,
+        title: 'Recovered',
+        class: 'success',
+        delta: global_data.NewRecovered
+      },
+      {
+        number: total.active,
+        title: 'Active',
+        class: 'info',
+        delta: null
+      },
+      {
+        number: global_data.TotalDeaths,
+        title: 'Deaths',
+        class: 'warning',
+        delta: global_data.NewDeaths
+      }
+    ]
 
   })()
 
