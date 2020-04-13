@@ -33,7 +33,8 @@
     </div>
     {#each overview as o}
       <div class="col-md-3">
-        <div class="text-center text-{ o.class }">
+        <div
+          class="text-center text-{ o.class }">
           <h2 class="h1 mb-0">{ o.number }</h2>
           <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
           <p><strong>{ o.title }</strong></p>
@@ -46,7 +47,7 @@
           <h1 class="title h1 text-center">Global COVID-19 Overview</h1>
         </div>
         <div class="col-md-6">
-          <h3 class="h3 text-secondary text-center">{total.lastupdatedtime} </h3>
+          <h3 class="h3 text-secondary text-center">{global_update_date} </h3>
         </div>
       </div>
     </div>
@@ -115,17 +116,19 @@
   const axios = require('axios')
   let total = { lastupdatedtime: '-' }
   let statewise = []
-  let state_data = [];
-  let global_overview = [];
+  let state_data = []
+  let global_overview = []
+  let global_update_date = ''
 
-  function sortByProperty(property){
-    return function(a,b){
-      if(a[property] > b[property])
-        return -1;
-      else if(a[property] < b[property])
-        return 1;
+  function sortByProperty (property) {
+    return function (a, b) {
+      if (a[property] > b[property]) {
+        return -1
+      } else if (a[property] < b[property]) {
+        return 1
+      }
 
-      return 0;
+      return 0
     }
   }
 
@@ -163,21 +166,20 @@
     let state_res = await axios.get('https://api.covid19india.org/state_district_wise.json')
     let state_raw_data = state_res.data
     for (let state in state_raw_data) {
-      state_data[state]=[]
+      state_data[state] = []
       for (let district in state_raw_data[state].districtData) {
         let dist = state_raw_data[state].districtData[district]
         dist.district = district
         state_data[state].push(state_raw_data[state].districtData[district])
       }
-      state_data[state] = state_data[state].sort(sortByProperty("confirmed"))
+      state_data[state] = state_data[state].sort(sortByProperty('confirmed'))
 
     }
     state_data = state_data
     window.state_data = state_data
 
-    let global = await axios.get("https://api.covid19api.com/summary");
+    let global = await axios.get('https://api.covid19api.com/summary')
     let global_data = global.data.Global
-    console.log(global_data)
     global_overview = [
       {
         number: global_data.TotalConfirmed,
@@ -192,7 +194,7 @@
         delta: global_data.NewRecovered
       },
       {
-        number: total.active,
+        number: global_data.TotalConfirmed - global_data.TotalRecovered,
         title: 'Active',
         class: 'info',
         delta: null
@@ -204,6 +206,8 @@
         delta: global_data.NewDeaths
       }
     ]
+    let date = new Date(global.data.Date)
+    global_update_date = date.toLocaleString().replace(",","")
 
   })()
 
