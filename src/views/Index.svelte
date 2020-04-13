@@ -22,7 +22,7 @@
 <div class="container-fluid">
   <h1 class="h1 title text-center mt-5">COVID-19 Overview</h1>
   <div class="row mt-5">
-    <div class="row" >
+    <div class="row">
       <div class="col-md-6" style="border-right: 1px solid grey ">
         <div class="row">
           <div class="col-md-12">
@@ -47,34 +47,34 @@
       </div>
 
       {#if global_update_date}
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row mb-3">
-              <div class="col-md-12">
-                <h1 class="title h1 text-center">Global</h1>
-                <h3 class="h6 text-muted text-center">Last updated at {global_update_date}</h3>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <h1 class="title h1 text-center">Global</h1>
+                  <h3 class="h6 text-muted text-center">Last updated at {global_update_date}</h3>
+                </div>
               </div>
             </div>
+            {#each global_overview as o}
+              <div class="col-md-3">
+                <div class="text-center text-{ o.class }">
+                  <h2 class="h1 mb-0">{ o.number }</h2>
+                  <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
+                  <p><strong>{ o.title }</strong></p>
+                </div>
+              </div>
+            {/each}
           </div>
-          {#each global_overview as o}
-            <div class="col-md-3">
-              <div class="text-center text-{ o.class }">
-                <h2 class="h1 mb-0">{ o.number }</h2>
-                <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
-                <p><strong>{ o.title }</strong></p>
-              </div>
-            </div>
-          {/each}
         </div>
-      </div>
       {/if}
     </div>
     <div class="col-md-6 mt-3">
       <h2 class="h2 text-center mb-3">State and District Wise</h2>
       <div class="table-responsive">
         <table class="table">
-          <thead>
+          <thead class="black white-text">
           <tr>
             <th scope="col">#</th>
             <th scope="col">State</th>
@@ -112,11 +112,34 @@
               </td>
             </tr>
           {/each}
-
           </tbody>
         </table>
       </div>
 
+    </div>
+
+    <div class="col-md-6 mt-3">
+      <h2 class="h2 text-center mb-3">Top countries</h2>
+      <table class="table">
+        <thead class="black white-text">
+        <tr>
+          <th scope="col">Country</th>
+          <th scope="col">Confirmed</th>
+          <th scope="col">Recovered</th>
+          <th scope="col">Deaths</th>
+        </tr>
+        </thead>
+        <tbody>
+        {#each countries as c}
+        <tr>
+          <th scope="row">{c.Country}</th>
+          <td>{c.TotalConfirmed}</td>
+          <td>{c.TotalRecovered}</td>
+          <td>{c.TotalDeaths}</td>
+        </tr>
+        {/each}
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -128,6 +151,7 @@
   let state_data = []
   let global_overview = []
   let global_update_date = ''
+  let countries = []
 
   function sortByProperty (property) {
     return function (a, b) {
@@ -185,14 +209,14 @@
 
     }
     state_data = state_data
-    window.state_data = state_data
-    let global;
+    let global
     try {
       global = await axios.get('https://api.covid19api.com/summary')
-    }catch (e) {
+    } catch (e) {
       global = await axios.get('https://cors-anywhere.herokuapp.com/https://api.covid19api.com/summary')
     }
     let global_data = global.data.Global
+    countries = global.data.Countries.sort(sortByProperty('TotalConfirmed'))
     global_overview = [
       {
         number: global_data.TotalConfirmed,
