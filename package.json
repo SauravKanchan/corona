@@ -30,6 +30,7 @@
     "fix": "eslint . --ext .js,.svelte --fix"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "eslint-plugin-svelte3": "^1.0.0"
   }
 }
