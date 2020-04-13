@@ -45,22 +45,19 @@
   }
 
   let whitelisted_states = ['mh', 'dl', 'kl', 'tn', 'rj']
-  let state_daily;
+  let state_daily
   let remaining_states = []
   let colors = {}
 
-  function getRandomColor () {
-    var letters = '0123456789ABCDEF'
-    var color = '#'
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)]
-    }
-    return color
+  let uinque_colors = ['#E52B50', '#FFBF00', '#9966CC', '#FBCEB1', '#7FFFD4', '#007FFF', '#89CFF0', '#F5F5DC', '#000000', '#0000FF', '#0095B6', '#8A2BE2', '#DE5D83', '#CD7F32', '#964B00', '#800020', '#702963', '#960018', '#DE3163', '#007BA7', '#F7E7CE', '#7FFF00', '#7B3F00', '#0047AB', '#6F4E37', '#B87333', '#FF7F50', '#DC143C', '#00FFFF', '#EDC9Af', '#7DF9FF', '#50C878', '#00FF3F', '#FFD700']
+
+  let c = 0
+  for (let s in stateCodes) {
+    colors[s.toLowerCase()] = uinque_colors[c]
+    c++
   }
 
-  for(let s in stateCodes){
-    colors[s.toLowerCase()] = getRandomColor();
-  }
+  // colors
 
   function update_remaing_states () {
     for (let s in stateCodes) {
@@ -68,15 +65,14 @@
         remaining_states.push(s.toLowerCase())
       }
     }
-    remaining_states = remaining_states;
+    remaining_states = remaining_states
   }
 
   update_remaing_states()
 
-
   let addNew
 
-  function update_graph(res,whitelisted_states ){
+  function update_graph (res, whitelisted_states) {
     let datasets_temp = {
       'an': '0',
       'ap': '1',
@@ -177,6 +173,7 @@
       }
     })
   }
+
   onMount(async () => {
     state_daily = await axios('https://api.covid19india.org/states_daily.json')
     update_graph(state_daily, whitelisted_states)
@@ -184,12 +181,12 @@
 
   function addState () {
     whitelisted_states.push(addNew)
-    update_remaing_states();
+    update_remaing_states()
     update_graph(state_daily, whitelisted_states)
   }
 
 </script>
-<div class="row">
+<div class="row mt-5">
   <canvas id="myChart" class="w-100 col-md-8" height="500"></canvas>
   <div class="col-md-4">
     <select class="browser-default custom-select" bind:value={addNew}>
@@ -198,6 +195,10 @@
         <option value="{state}">{ stateCodes[state.toUpperCase()] }</option>
       {/each}
     </select>
-    <button class="btn btn-primary" on:click={addState}>Submit</button>
+    <div class="row mt-2">
+      <div class="col text-center">
+        <button class="btn btn-primary" on:click={addState}>Submit</button>
+      </div>
+    </div>
   </div>
 </div>
