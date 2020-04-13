@@ -3,6 +3,7 @@
 
   import Overview from './Overview.svelte'
   import Chart from './Chart.svelte'
+
   const axios = require('axios')
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -224,9 +225,8 @@
       </div>
     {/if}
     <div class="col-md-12">
-      <Chart />
+      <Chart/>
     </div>
-
 
   </div>
 </div>
