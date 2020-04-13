@@ -117,6 +117,7 @@
       </div>
 
     </div>
+{#if global_update_date}
 
     <div class="col-md-6 mt-3">
       <h2 class="h2 text-center mb-3">Top countries</h2>
@@ -141,6 +142,7 @@
         </tbody>
       </table>
     </div>
+  {/if}
   </div>
 </div>
 <script>
@@ -196,7 +198,12 @@
       }
     ]
 
-    let state_res = await axios.get('https://api.covid19india.org/state_district_wise.json')
+    let state_res;
+    try{
+      state_res = await axios.get('https://api.covid19india.org/state_district_wise.json')
+    }catch (e) {
+      state_res = await axios.get('https://cors-anywhere.herokuapp.com/https://api.covid19india.org/state_district_wise.json')
+    }
     let state_raw_data = state_res.data
     for (let state in state_raw_data) {
       state_data[state] = []
@@ -209,14 +216,14 @@
 
     }
     state_data = state_data
-    let global
+    let global;
     try {
-      global = await axios.get('https://api.covid19api.com/summary')
+      global = await axios.get('https://api.covid19api.com/summary');
     } catch (e) {
-      global = await axios.get('https://cors-anywhere.herokuapp.com/https://api.covid19api.com/summary')
+      global = await axios.get('https://cors-anywhere.herokuapp.com/https://api.covid19api.com/summary');
     }
     let global_data = global.data.Global
-    countries = global.data.Countries.sort(sortByProperty('TotalConfirmed'))
+    countries = global.data.Countries.sort(sortByProperty('TotalConfirmed')).slice(0,37)
     global_overview = [
       {
         number: global_data.TotalConfirmed,
