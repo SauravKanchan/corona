@@ -72,7 +72,7 @@
 
   let addNew
 
-  function update_graph (res, whitelisted_states) {
+  function update_graph (res, whitelisted_states, status) {
     let datasets_temp = {
       'an': '0',
       'ap': '1',
@@ -176,29 +176,45 @@
 
   onMount(async () => {
     state_daily = await axios('https://api.covid19india.org/states_daily.json')
-    update_graph(state_daily, whitelisted_states)
+    update_graph(state_daily, whitelisted_states, status)
   })
 
-  function addState () {
+  function form_submit () {
     whitelisted_states.push(addNew)
     update_remaing_states()
-    update_graph(state_daily, whitelisted_states)
+    console.log(status)
+    update_graph(state_daily, whitelisted_states, status)
   }
 
 </script>
 <div class="row mt-5">
   <canvas id="myChart" class="w-100 col-md-8" height="500"></canvas>
   <div class="col-md-4">
-    <select class="browser-default custom-select" bind:value={addNew}>
-      <option value="0" selected>Add states here</option>
-      {#each  remaining_states as state}
-        <option value="{state}">{ stateCodes[state.toUpperCase()] }</option>
-      {/each}
-    </select>
-    <div class="row mt-2">
-      <div class="col text-center">
-        <button class="btn btn-primary" on:click={addState}>Submit</button>
+    <form class="text-center border border-light p-5" action="#!">
+      <p class="h4 mb-4">Change Graph parameters</p>
+      <select class="browser-default custom-select" bind:value={addNew}>
+        <option value="0" selected>Add states here</option>
+        {#each  remaining_states as state}
+          <option value="{state}">{ stateCodes[state.toUpperCase()] }</option>
+        {/each}
+      </select>
+      <p class="h5 mt-4">Select graph of</p>
+      <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="confirmedId"
+               value="Confirmed" bind:group={status} checked>
+        <label class="custom-control-label" for="confirmedId">Confirmed</label>
       </div>
-    </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="RecoveredId" value="Recovered" bind:group={status}>
+        <label class="custom-control-label" for="RecoveredId">Recovered</label>
+      </div>
+      <div class="custom-control custom-radio">
+        <input type="radio" class="custom-control-input" id="DeceasedId" value="Deceased" bind:group={status}>
+        <label class="custom-control-label" for="DeceasedId">Deceased</label>
+      </div>
+      <div class="text-center mt-3">
+        <button class="btn btn-primary" type="button" on:click={form_submit}>Submit</button>
+      </div>
+    </form>
   </div>
 </div>
