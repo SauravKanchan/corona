@@ -55,38 +55,30 @@
           <tbody>
 
           {#each statewise as state, i}
-          <tr class="accordion-toggle collapsed" id="accordion{i}" data-toggle="collapse" data-parent="#accordion{i}"
-              href="#collapse{i}">
-            <td class="expand-button"></td>
-            <td>{ state.state }</td>
-            <td>{ state.confirmed }</td>
-            <td>{ state.active }</td>
-            <td>{ state.recovered }</td>
-            <td>{ state.deaths }</td>
-          </tr>
-          <tr class="hide-table-padding">
-            <td></td>
-            <td colspan="5">
-              <div id="collapse{i}" class="collapse in p-3">
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value 1</div>
+            <tr class="accordion-toggle collapsed" id="accordion{i}" data-toggle="collapse" data-parent="#accordion{i}"
+                href="#collapse{i}">
+              <td class="expand-button"></td>
+              <td>{ state.state }</td>
+              <td>{ state.confirmed }</td>
+              <td>{ state.active }</td>
+              <td>{ state.recovered }</td>
+              <td>{ state.deaths }</td>
+            </tr>
+            <tr class="hide-table-padding">
+              <td></td>
+              <td colspan="5">
+                <div id="collapse{i}" class="collapse in p-3">
+                  {#if state_data[state.state]}
+                    {#each state_data[state.state] as sd}
+                      <div class="row">
+                        <div class="col-6">{sd.district}</div>
+                        <div class="col-2">{sd.confirmed}</div>
+                      </div>
+                    {/each}
+                  {/if}
                 </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value 2</div>
-                </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value 3</div>
-                </div>
-                <div class="row">
-                  <div class="col-2">label</div>
-                  <div class="col-6">value 4</div>
-                </div>
-              </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
           {/each}
 
           </tbody>
@@ -100,12 +92,12 @@
   let overview = []
   const axios = require('axios')
   let total = { lastupdatedtime: '-' }
-  let statewise = [];
+  let statewise = []
+  let state_data = [];
   (async () => {
     let res = await axios.get('https://api.covid19india.org/data.json')
     total = res.data.statewise[0]
     statewise = res.data.statewise.slice(1)
-    window.statewise = statewise
     overview = [
       {
         number: total.confirmed,
@@ -128,5 +120,21 @@
         class: 'warning'
       }
     ]
+
+    let state_res = await axios.get('https://api.covid19india.org/state_district_wise.json')
+    let state_raw_data = state_res.data
+    for (let state in state_raw_data) {
+      state_data[state]=[]
+      for (let district in state_raw_data[state].districtData) {
+        let dist = state_raw_data[state].districtData[district]
+        dist.district = district
+        state_data[state].push(state_raw_data[state].districtData[district])
+      }
+    }
+    state_data = state_data
+    window.state_data = state_data
+
   })()
+
+
 </script>
