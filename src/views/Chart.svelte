@@ -147,18 +147,20 @@
       datasets[d].label = stateCodes[datasets[d].label.toUpperCase()]
     }
     let ctx = document.getElementById('myChart').getContext('2d')
+    let graph_name = status.toLowerCase()
+    if(graph_name === "deceased"){
+      graph_name = "deaths"
+    }
     let chart = new Chart(ctx, {
       type: 'line',
       data: {
         datasets: datasets,
         labels: labels
       },
-
-      // Configuration options go here
       options: {
         title: {
           display: true,
-          text: 'Statewise Total no. of COVID-19 cases in India',
+          text: `Statewise ${graph_name} cases of COVID-19 cases in India`,
           fontSize: 30
         },
         scales: {
@@ -210,7 +212,7 @@
       </div>
       <div class="custom-control custom-radio">
         <input type="radio" class="custom-control-input" id="DeceasedId" value="Deceased" bind:group={status}>
-        <label class="custom-control-label" for="DeceasedId">Deceased</label>
+        <label class="custom-control-label" for="DeceasedId">Death</label>
       </div>
       <div class="text-center mt-3">
         <button class="btn btn-primary" type="button" on:click={form_submit}>Submit</button>
