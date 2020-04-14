@@ -95,8 +95,9 @@
   // colors
 
   function update_remaing_states () {
+    remaining_states = []
     for (let s in stateCodes) {
-      if (!whitelisted_states.includes(s)) {
+      if (!whitelisted_states.includes(s.toLowerCase())) {
         remaining_states.push({
           abbr: s.toLowerCase(),
           name: stateCodes[s]
@@ -104,6 +105,7 @@
       }
     }
     remaining_states = remaining_states
+    console.log(remaining_states)
   }
 
   update_remaing_states()
@@ -203,8 +205,8 @@
       options: {
         title: {
           display: true,
-          text: `Statewise ${graph_name} cases of COVID-19 cases in India`,
-          fontSize: 30
+          text: `Statewise ${graph_name} cases of COVID-19 cases in India of last ${days}`,
+          fontSize: 25
         },
         scales: {
           yAxes: [{
@@ -228,8 +230,8 @@
 
   function add_state () {
     if (addNew) {
-      if (!whitelisted_states.includes(addNew.abbr)) {
-        whitelisted_states.push(addNew.abbr)
+      if (!whitelisted_states.includes(addNew)) {
+        whitelisted_states.push(addNew)
         update_remaing_states()
         update_graph(state_daily, whitelisted_states, status, days, cumulative)
       }
