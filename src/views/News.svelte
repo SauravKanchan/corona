@@ -33,7 +33,6 @@
             <p class="card-text">{n.description}</p>
 
             <a class="btn btn-unique" href="{n.url}" target="_blank">Read More</a>
-
           </div>
 
         </div>

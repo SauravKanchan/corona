@@ -4,8 +4,9 @@
   import Overview from './Overview.svelte'
   import Chart from './Chart.svelte'
   import StateWiseTable from './StatewiseTable.svelte'
-  import IndiaBarGraph from './IndiaBarGraph.svelte'
+  // import IndiaBarGraph from './IndiaBarGraph.svelte'
   import { afterUpdate } from 'svelte'
+  import PercentageChange from './PercentageChange.svelte'
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -189,14 +190,7 @@
       <Chart/>
     </div>
     <div class="col-md-12 mt-5">
-      <div class="row">
-        <div class="col-md-6">
-          <IndiaBarGraph cases_time_series={cases_time_series}/>
-        </div>
-        <div class="col-md-6">
-          Coming soon
-        </div>
-      </div>
+      <PercentageChange />
     </div>
   </div>
 </div>
