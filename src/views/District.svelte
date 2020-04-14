@@ -32,7 +32,6 @@
   })
   afterUpdate(() => {
     if (district.length) {
-      console.log(district.length)
       window.$('#dtBasicExample').DataTable({
         pageLength: 25,
         aaSorting: [[1, 'desc']]

@@ -4,6 +4,7 @@
   import Overview from './Overview.svelte'
   import Chart from './Chart.svelte'
   import { afterUpdate } from 'svelte'
+  import StateWiseTable  from './StatewiseTable.svelte';
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -114,7 +115,6 @@
 
   afterUpdate(() => {
     if (global_update_date) {
-      console.log(countries)
       window.$('#countries').DataTable({
         pageLength: 25,
         aaSorting: [[1, 'desc']]
@@ -125,89 +125,39 @@
 
 </script>
 
-<style>
-  tr.hide-table-padding td {
-    padding: 0;
-  }
-
-  .expand-button {
-    position: relative;
-  }
-
-  .accordion-toggle .expand-button:after {
-    position: absolute;
-    left: .75rem;
-    top: 50%;
-    transform: translate(0, -50%);
-    content: '-';
-  }
-
-  .accordion-toggle.collapsed .expand-button:after {
-    content: '+';
-  }
-</style>
-<div class="container-fluid">
-  <h1 class="h1 title text-center mt-5">COVID-19 Overview</h1>
+<div class="container-fluid row">
+  <h1 class="h1 title text-center mt-5 col-md-12">COVID-19 Overview</h1>
   <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="row">
+        {#if global_update_date}
+          <div class="col-md-6" style="border-right: 1px solid grey ">
+            <Overview title="India" overview={overview} lastupdatedtime={total.lastupdatedtime}/>
+          </div>
+        {:else}
+          <div class="col-md-12">
+            <Overview title="India" overview={overview} lastupdatedtime={total.lastupdatedtime}/>
+          </div>
+        {/if}
 
-    <div class="row">
-      <div class="col-md-6" style="border-right: 1px solid grey ">
-        <Overview title="India" overview={overview} lastupdatedtime={total.lastupdatedtime}/>
+
+        {#if global_update_date}
+          <div class="col-md-6">
+            <Overview title="Global" overview={global_overview} lastupdatedtime={global_update_date}/>
+          </div>
+        {/if}
+      </div>
+    </div>
+    {#if global_update_date}
+      <div class="col-md-6 mt-3">
+        <StateWiseTable statewise={statewise} state_data={state_data} />
+      </div>
+    {:else}
+      <div class="col-md-12 mt-3">
+        <StateWiseTable statewise={statewise} state_data={state_data} />
       </div>
 
-      {#if global_update_date}
-        <div class="col-md-6">
-          <Overview title="Global" overview={global_overview} lastupdatedtime={global_update_date}/>
-        </div>
-      {/if}
-    </div>
-    <div class="col-md-6 mt-3">
-      <h2 class="h2 text-center mb-3">State and District Wise</h2>
-      <div class="table-responsive">
-        <table class="table">
-          <thead class="black white-text">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">State</th>
-            <th scope="col">Confirmed</th>
-            <th scope="col">Active</th>
-            <th scope="col">Recovered</th>
-            <th scope="col">Deaths</th>
-          </tr>
-          </thead>
-          <tbody>
-
-          {#each statewise as state, i}
-            <tr class="accordion-toggle collapsed" id="accordion{i}" data-toggle="collapse" data-parent="#accordion{i}"
-                href="#collapse{i}">
-              <td class="expand-button"></td>
-              <td>{ state.state }</td>
-              <td>{ state.confirmed }</td>
-              <td>{ state.active }</td>
-              <td>{ state.recovered }</td>
-              <td>{ state.deaths }</td>
-            </tr>
-            <tr class="hide-table-padding table">
-              <td></td>
-              <td colspan="5">
-                <div id="collapse{i}" class="collapse in p-3">
-                  {#if state_data[state.state]}
-                    {#each state_data[state.state] as sd}
-                      <div class="row">
-                        <div class="col-4 m-2 text-center">{sd.district}</div>
-                        <div class="col-4 m-2 text-center">{sd.confirmed}</div>
-                      </div>
-                    {/each}
-                  {/if}
-                </div>
-              </td>
-            </tr>
-          {/each}
-          </tbody>
-        </table>
-      </div>
-
-    </div>
+    {/if}
     {#if global_update_date}
       <div class="col-md-6 mt-3">
         <h2 class="h2 text-center mb-3">Countries</h2>
