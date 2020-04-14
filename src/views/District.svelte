@@ -9,6 +9,7 @@
       for (let d in data[s].districtData) {
         let json = data[s].districtData[d]
         json.name = d
+        json.state = s
         district.push(json)
       }
     }
@@ -20,7 +21,7 @@
     if (district.length) {
       window.$('#dtBasicExample').DataTable({
         pageLength: 25,
-        aaSorting: [[1, 'desc']]
+        aaSorting: [[2, 'desc']]
       })
       window.$('.dataTables_length').addClass('bs-select')
     }
@@ -35,6 +36,7 @@
       <tr>
         <th class="th-sm">District
         </th>
+        <th class="th-sm">State</th>
         <th class="th-sm">Confirmed
         </th>
       </tr>
@@ -43,6 +45,7 @@
       {#each district as d}
         <tr>
           <td>{d.name}</td>
+          <td>{d.state}</td>
           <td>{d.confirmed}</td>
         </tr>
       {/each}

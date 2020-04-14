@@ -150,7 +150,7 @@
           <div class="col-md-6 col-xs-12 mt-3">
             <StateWiseTable statewise={statewise} state_data={state_data}/>
           </div>
-          <div class="col-md-6 mt-3 table-responsive">
+          <div class="col-md-6 col-xs-12 mt-3 table-responsive">
             <h2 class="h2 text-center mb-3">Countries</h2>
             <table class="table" id="countries">
               <thead class="black white-text">

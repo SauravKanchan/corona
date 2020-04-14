@@ -34,7 +34,6 @@
   import AutoComplete from './AutoComplete.svelte'
 
   const Chart = require('chart.js')
-
   let status = 'Confirmed'
   const stateCodes = {
     AP: 'Andhra Pradesh',
@@ -191,10 +190,7 @@
       datasets[d].label = stateCodes[datasets[d].label.toUpperCase()]
     }
     let ctx = document.getElementById('myChart').getContext('2d')
-    let graph_name = status.toLowerCase()
-    if (graph_name === 'deceased') {
-      graph_name = 'deaths'
-    }
+
     let chart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -204,7 +200,7 @@
       options: {
         title: {
           display: true,
-          text: `Statewise ${graph_name} cases of COVID-19 cases in India of last ${days}`,
+          text: `Statewise cases of COVID-19 cases in India of last ${days}`,
           fontSize: 25
         },
         scales: {
@@ -221,7 +217,7 @@
   }
 
   onMount(async () => {
-    if(!state_daily){
+    if (!state_daily) {
       state_daily = await window.api('https://api.covid19india.org/states_daily.json')
     }
     update_graph(state_daily, whitelisted_states, status, days, cumulative)
@@ -281,7 +277,8 @@
         <p class="col-md-2 h5">{days}</p>
       </div>
       <div class="custom-control custom-switch row">
-        <input type="checkbox" class="custom-control-input" bind:checked={cumulative} on:change={update} id="customSwitch1">
+        <input type="checkbox" class="custom-control-input" bind:checked={cumulative} on:change={update}
+               id="customSwitch1">
         <label class="custom-control-label" for="customSwitch1">Add previous day values(cumulative)</label>
       </div>
     </div>
