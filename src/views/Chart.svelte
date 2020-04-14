@@ -110,7 +110,7 @@
 
   let addNew
 
-  function update_graph (res, whitelisted_states, status) {
+  function update_graph (res, whitelisted_states, status, days) {
     let datasets_temp = {
       'an': '0',
       'ap': '1',
@@ -166,7 +166,7 @@
     let labels = ['']
     let cases = res.data.states_daily.filter((d) => d.status === status)
     total_days = cases.length
-    cases = cases.splice(0, 30)
+    cases = cases.splice(total_days-days, total_days)
     for (let day in cases) {
       labels.push(cases[day].date)
       for (let states in cases[day]) {
@@ -217,7 +217,7 @@
 
   onMount(async () => {
     state_daily = await axios('https://api.covid19india.org/states_daily.json')
-    update_graph(state_daily, whitelisted_states, status)
+    update_graph(state_daily, whitelisted_states, status, days)
   })
 
   function add_state () {
@@ -225,13 +225,13 @@
       if (!whitelisted_states.includes(addNew.abbr)) {
         whitelisted_states.push(addNew.abbr)
         update_remaing_states()
-        update_graph(state_daily, whitelisted_states, status)
+        update_graph(state_daily, whitelisted_states, status, days)
       }
     }
   }
 
-  function select_graph () {
-    update_graph(state_daily, whitelisted_states, status)
+  function update () {
+    update_graph(state_daily, whitelisted_states, status, days)
   }
 
 
@@ -253,23 +253,24 @@
 
       <p class="h5 mt-4">Select graph of</p>
       <div class="custom-control custom-radio">
-        <input type="radio" on:change={select_graph} class="custom-control-input" id="confirmedId"
+        <input type="radio" on:change={update} class="custom-control-input" id="confirmedId"
                value="Confirmed" bind:group={status} checked>
         <label class="custom-control-label" for="confirmedId">Confirmed</label>
       </div>
       <div class="custom-control custom-radio">
-        <input type="radio" on:change={select_graph} class="custom-control-input" id="RecoveredId"
+        <input type="radio" on:change={update} class="custom-control-input" id="RecoveredId"
                value="Recovered" bind:group={status}>
         <label class="custom-control-label" for="RecoveredId">Recovered</label>
       </div>
       <div class="custom-control custom-radio">
-        <input type="radio" on:change={select_graph} class="custom-control-input" id="DeceasedId"
+        <input type="radio" on:change={update} class="custom-control-input" id="DeceasedId"
                value="Deceased" bind:group={status}>
         <label class="custom-control-label" for="DeceasedId">Death</label>
       </div>
       <div class="row">
         <label class="form-control-label col-md-2" for="DaysId">Days</label>
-        <input type="range" id="DaysId" class="slider col-md-8" bind:value={days} max="{total_days}" min="1">
+        <input type="range" id="DaysId" class="slider col-md-8" bind:value={days} max="{total_days}"
+               min="1" on:change={update}>
         <p class="col-md-2 h5">{days}</p>
       </div>
     </div>
