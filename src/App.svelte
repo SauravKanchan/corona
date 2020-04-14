@@ -1,7 +1,18 @@
 <script>
   import router, { page } from './router'
-
+  import axios from 'axios'
+  import { setupCache } from 'axios-cache-adapter'
   router.start()
+
+
+  const cache = setupCache({
+    maxAge: 15 * 60 * 1000
+  })
+
+  window.api = axios.create({
+    adapter: cache.adapter
+  })
+
 </script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/">COVID-19</a>

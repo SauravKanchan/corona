@@ -35,7 +35,6 @@
 
   const Chart = require('chart.js')
 
-  const axios = require('axios')
   let status = 'Confirmed'
   const stateCodes = {
     AP: 'Andhra Pradesh',
@@ -221,7 +220,9 @@
   }
 
   onMount(async () => {
-    state_daily = await axios('https://api.covid19india.org/states_daily.json')
+    if(!state_daily){
+      state_daily = await window.api('https://api.covid19india.org/states_daily.json')
+    }
     update_graph(state_daily, whitelisted_states, status, days, cumulative)
   })
 

@@ -4,7 +4,6 @@
   import Overview from './Overview.svelte'
   import Chart from './Chart.svelte'
 
-  const axios = require('axios')
   let total = { lastupdatedtime: '-' }
   let statewise = []
   let state_data = []
@@ -25,7 +24,7 @@
   }
 
   (async () => {
-    let res = await axios.get('https://api.covid19india.org/data.json')
+    let res = await window.api.get('https://api.covid19india.org/data.json')
     total = res.data.statewise[0]
     statewise = res.data.statewise.slice(1)
     overview = [
@@ -57,9 +56,9 @@
 
     let state_res
     try {
-      state_res = await axios.get('https://api.covid19india.org/state_district_wise.json')
+      state_res = await window.api.get('https://api.covid19india.org/state_district_wise.json')
     } catch (e) {
-      state_res = await axios.get('https://cors-anywhere.herokuapp.com/https://api.covid19india.org/state_district_wise.json')
+      state_res = await window.api.get('https://cors-anywhere.herokuapp.com/https://api.covid19india.org/state_district_wise.json')
     }
     let state_raw_data = state_res.data
     for (let state in state_raw_data) {
@@ -75,9 +74,9 @@
     state_data = state_data
     let global
     try {
-      global = await axios.get('https://api.covid19api.com/summary')
+      global = await window.api.get('https://api.covid19api.com/summary')
     } catch (e) {
-      global = await axios.get('https://cors-anywhere.herokuapp.com/https://api.covid19api.com/summary')
+      global = await window.api.get('https://cors-anywhere.herokuapp.com/https://api.covid19api.com/summary')
     }
     let global_data = global.data.Global
     countries = global.data.Countries.sort(sortByProperty('TotalConfirmed')).slice(0, 37)
