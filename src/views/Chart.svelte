@@ -220,22 +220,20 @@
     update_graph(state_daily, whitelisted_states, status)
   })
 
-  function form_submit () {
-    if(addNew){
-      update_remaing_states()
-      update_graph(state_daily, whitelisted_states, status)
+  function add_state () {
+    if (addNew) {
+      if (!whitelisted_states.includes(addNew.abbr)) {
+        whitelisted_states.push(addNew.abbr)
+        update_remaing_states()
+        update_graph(state_daily, whitelisted_states, status)
+      }
     }
-    console.log(addNew, selectedColorObject)
-    // whitelisted_states.push(addNew.abbr)
   }
-  const colorList = [
-    { id: 1, name: "White", code: "#FFFFFF" },
-    { id: 2, name: "Red", code: "#FF0000" },
-    { id: 3, name: "Yellow", code: "#FF00FF" },
-    { id: 4, name: "Green", code: "#00FF00" },
-    { id: 5, name: "Blue", code: "#0000FF" },
-    { id: 6, name: "Black", code: "#000000" }
-  ];
+
+  function select_graph () {
+    update_graph(state_daily, whitelisted_states, status)
+  }
+
 
 </script>
 <div class="row mt-5">
@@ -249,30 +247,30 @@
         bind:value={addNew}
         valueFieldName="abbr"
         labelFieldName="name"
-        onChange={form_submit}
+        onChange={add_state}
+        placeholder="Add New states here"
       />
 
       <p class="h5 mt-4">Select graph of</p>
       <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="confirmedId"
+        <input type="radio" on:change={select_graph} class="custom-control-input" id="confirmedId"
                value="Confirmed" bind:group={status} checked>
         <label class="custom-control-label" for="confirmedId">Confirmed</label>
       </div>
       <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="RecoveredId" value="Recovered" bind:group={status}>
+        <input type="radio" on:change={select_graph} class="custom-control-input" id="RecoveredId"
+               value="Recovered" bind:group={status}>
         <label class="custom-control-label" for="RecoveredId">Recovered</label>
       </div>
       <div class="custom-control custom-radio">
-        <input type="radio" class="custom-control-input" id="DeceasedId" value="Deceased" bind:group={status}>
+        <input type="radio" on:change={select_graph} class="custom-control-input" id="DeceasedId"
+               value="Deceased" bind:group={status}>
         <label class="custom-control-label" for="DeceasedId">Death</label>
       </div>
       <div class="row">
         <label class="form-control-label col-md-2" for="DaysId">Days</label>
         <input type="range" id="DaysId" class="slider col-md-8" bind:value={days} max="{total_days}" min="1">
         <p class="col-md-2 h5">{days}</p>
-      </div>
-      <div class="text-center mt-3">
-        <button class="btn btn-primary" type="button" on:click={form_submit}>Submit</button>
       </div>
     </div>
   </div>
