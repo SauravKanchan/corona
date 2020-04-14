@@ -37,8 +37,6 @@
 
   afterUpdate(() => {
     if(district.length){
-      console.log("afterUpdate")
-      console.log(window.$('#dtBasicExample').html())
       window.$('#dtBasicExample').DataTable()
       window.$('.dataTables_length').addClass('bs-select')
     }
