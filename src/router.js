@@ -18,5 +18,11 @@ router('/district', () =>
   )
 )
 
+router('/news', () =>
+  import(/* webpackChunkName: "index" */ './views/News.svelte').then(module =>
+    page.set({ component: module.default })
+  )
+)
+
 
 export default router

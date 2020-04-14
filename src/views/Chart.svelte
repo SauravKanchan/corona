@@ -189,7 +189,7 @@
     for (let d in datasets) {
       datasets[d].label = stateCodes[datasets[d].label.toUpperCase()]
     }
-    let ctx = document.getElementById('myChart').getContext('2d')
+    let ctx = document.getElementById('stateChart').getContext('2d')
 
     let chart = new Chart(ctx, {
       type: 'line',
@@ -240,7 +240,7 @@
 
 </script>
 <div class="row mt-5">
-  <canvas id="myChart" class="w-100 col-md-8" height="500"></canvas>
+  <canvas id="stateChart" class="w-100 col-md-8" height="500"></canvas>
   <div class="col-md-4">
     <div class="text-center border border-light p-5">
       <p class="h4 mb-4">Change Graph parameters</p>

@@ -3,8 +3,9 @@
 
   import Overview from './Overview.svelte'
   import Chart from './Chart.svelte'
-  import { afterUpdate } from 'svelte'
   import StateWiseTable from './StatewiseTable.svelte'
+  import IndiaBarGraph from './IndiaBarGraph.svelte'
+  import { afterUpdate } from 'svelte'
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -12,6 +13,7 @@
   let global_overview = []
   let global_update_date = ''
   let countries = []
+  let cases_time_series = []
 
   function sortByProperty (property) {
     return function (a, b) {
@@ -28,6 +30,8 @@
   (async () => {
     let res = await window.api.get('https://api.covid19india.org/data.json')
     total = res.data.statewise[0]
+    cases_time_series = res.data.cases_time_series
+
     statewise = res.data.statewise.slice(1)
     overview = [
       {
@@ -71,7 +75,6 @@
         state_data[state].push(state_raw_data[state].districtData[district])
       }
       state_data[state] = state_data[state].sort(sortByProperty('confirmed'))
-
     }
     state_data = state_data
     let global
@@ -184,6 +187,16 @@
     </div>
     <div class="col-md-12">
       <Chart/>
+    </div>
+    <div class="col-md-12 mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <IndiaBarGraph cases_time_series={cases_time_series}/>
+        </div>
+        <div class="col-md-6">
+          Coming soon
+        </div>
+      </div>
     </div>
   </div>
 </div>
