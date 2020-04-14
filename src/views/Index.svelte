@@ -3,6 +3,7 @@
 
   import Overview from './Overview.svelte'
   import Chart from './Chart.svelte'
+  import { afterUpdate } from 'svelte'
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -79,7 +80,7 @@
       global = await window.api.get('https://cors-anywhere.herokuapp.com/https://api.covid19api.com/summary')
     }
     let global_data = global.data.Global
-    countries = global.data.Countries.sort(sortByProperty('TotalConfirmed')).slice(0, 37)
+    countries = global.data.Countries
     global_overview = [
       {
         number: global_data.TotalConfirmed,
@@ -110,6 +111,17 @@
     global_update_date = date.toLocaleString().replace(',', '')
 
   })()
+
+  afterUpdate(() => {
+    if (global_update_date) {
+      console.log(countries)
+      window.$('#countries').DataTable({
+        pageLength: 25,
+        aaSorting: [[1, 'desc']]
+      })
+      window.$('.dataTables_length').addClass('bs-select')
+    }
+  })
 
 </script>
 
@@ -198,8 +210,8 @@
     </div>
     {#if global_update_date}
       <div class="col-md-6 mt-3">
-        <h2 class="h2 text-center mb-3">Top countries</h2>
-        <table class="table">
+        <h2 class="h2 text-center mb-3">Countries</h2>
+        <table class="table" id="countries">
           <thead class="black white-text">
           <tr>
             <th scope="col">Country</th>

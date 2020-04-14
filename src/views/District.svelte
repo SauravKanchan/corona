@@ -33,7 +33,10 @@
   afterUpdate(() => {
     if (district.length) {
       console.log(district.length)
-      window.$('#dtBasicExample').DataTable()
+      window.$('#dtBasicExample').DataTable({
+        pageLength: 25,
+        aaSorting: [[1, 'desc']]
+      })
       window.$('.dataTables_length').addClass('bs-select')
     }
   })
