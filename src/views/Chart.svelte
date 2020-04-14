@@ -78,6 +78,7 @@
   }
   let days = 30
   let total_days
+  let cumulative = true
 
   let whitelisted_states = ['mh', 'dl', 'kl', 'tn', 'rj']
   let state_daily
@@ -110,7 +111,7 @@
 
   let addNew
 
-  function update_graph (res, whitelisted_states, status, days) {
+  function update_graph (res, whitelisted_states, status, days, cumulative) {
     let datasets_temp = {
       'an': '0',
       'ap': '1',
@@ -166,7 +167,7 @@
     let labels = ['']
     let cases = res.data.states_daily.filter((d) => d.status === status)
     total_days = cases.length
-    cases = cases.splice(total_days-days, total_days)
+    cases = cases.splice(total_days - days, total_days)
     for (let day in cases) {
       labels.push(cases[day].date)
       for (let states in cases[day]) {
@@ -174,7 +175,11 @@
           if (whitelisted_states.includes(states)) {
             for (let s in datasets) {
               if (datasets[s].label === states) {
-                datasets[s].data.push(datasets[s].data[datasets[s].data.length - 1] + parseInt(cases[day][states]))
+                let element = parseInt(cases[day][states])
+                if (cumulative) {
+                  element += datasets[s].data[datasets[s].data.length - 1]
+                }
+                datasets[s].data.push(element)
               }
             }
           }
@@ -217,7 +222,7 @@
 
   onMount(async () => {
     state_daily = await axios('https://api.covid19india.org/states_daily.json')
-    update_graph(state_daily, whitelisted_states, status, days)
+    update_graph(state_daily, whitelisted_states, status, days, cumulative)
   })
 
   function add_state () {
@@ -225,13 +230,13 @@
       if (!whitelisted_states.includes(addNew.abbr)) {
         whitelisted_states.push(addNew.abbr)
         update_remaing_states()
-        update_graph(state_daily, whitelisted_states, status, days)
+        update_graph(state_daily, whitelisted_states, status, days, cumulative)
       }
     }
   }
 
   function update () {
-    update_graph(state_daily, whitelisted_states, status, days)
+    update_graph(state_daily, whitelisted_states, status, days, cumulative)
   }
 
 
@@ -267,11 +272,15 @@
                value="Deceased" bind:group={status}>
         <label class="custom-control-label" for="DeceasedId">Death</label>
       </div>
-      <div class="row">
+      <div class="row mt-3">
         <label class="form-control-label col-md-2" for="DaysId">Days</label>
         <input type="range" id="DaysId" class="slider col-md-8" bind:value={days} max="{total_days}"
                min="1" on:change={update}>
         <p class="col-md-2 h5">{days}</p>
+      </div>
+      <div class="custom-control custom-switch row">
+        <input type="checkbox" class="custom-control-input" bind:checked={cumulative} on:change={update} id="customSwitch1">
+        <label class="custom-control-label" for="customSwitch1">Add previous day values(cumulative)</label>
       </div>
     </div>
   </div>
