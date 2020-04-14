@@ -14,7 +14,6 @@
 </style>
 <script>
   import { onMount } from 'svelte';
-  import { afterUpdate } from 'svelte';
 
 
   let district = []
@@ -32,15 +31,11 @@
       return b.confirmed - a.confirmed
     })
     district = district
-    console.log("onMount")
-  })
-
-  afterUpdate(() => {
     if(district.length){
       window.$('#dtBasicExample').DataTable()
       window.$('.dataTables_length').addClass('bs-select')
     }
-  });
+  })
 
 
 </script>
