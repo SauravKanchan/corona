@@ -13,8 +13,7 @@
   }
 </style>
 <script>
-  import { onMount } from 'svelte';
-
+  import { afterUpdate, onMount } from 'svelte'
 
   let district = []
   onMount(async () => {
@@ -27,44 +26,47 @@
         district.push(json)
       }
     }
-    district.sort((a, b) => {
-      return b.confirmed - a.confirmed
-    })
+
     district = district
-    if(district.length){
+
+  })
+  afterUpdate(() => {
+    if (district.length) {
+      console.log(district.length)
       window.$('#dtBasicExample').DataTable()
       window.$('.dataTables_length').addClass('bs-select')
     }
   })
 
-
 </script>
 <div class="container-fluid mt-5">
-  <h2 class="text-center title h2">All {district.length} Districts</h2>
-<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-  <thead>
-  <tr>
-    <th class="th-sm">District
-    </th>
-    <th class="th-sm">Confirmed
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  {#each district as d}
-    <tr>
-      <td>{d.name}</td>
-      <td>{d.confirmed}</td>
-    </tr>
-  {/each}
-  </tbody>
-  <tfoot>
-  <tr>
-    <th class="th-sm">District
-    </th>
-    <th class="th-sm">Confirmed
-    </th>
-  </tr>
-  </tfoot>
-</table>
+  {#if district.length }
+    <h2 class="text-center title h2">All {district.length} Districts</h2>
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+      <thead>
+      <tr>
+        <th class="th-sm">District
+        </th>
+        <th class="th-sm">Confirmed
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      {#each district as d}
+        <tr>
+          <td>{d.name}</td>
+          <td>{d.confirmed}</td>
+        </tr>
+      {/each}
+      </tbody>
+      <tfoot>
+      <tr>
+        <th class="th-sm">District
+        </th>
+        <th class="th-sm">Confirmed
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  {/if}
 </div>
