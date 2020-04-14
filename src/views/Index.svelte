@@ -4,7 +4,7 @@
   import Overview from './Overview.svelte'
   import Chart from './Chart.svelte'
   import { afterUpdate } from 'svelte'
-  import StateWiseTable  from './StatewiseTable.svelte';
+  import StateWiseTable from './StatewiseTable.svelte'
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -134,60 +134,56 @@
           <div class="col-md-6" style="border-right: 1px solid grey ">
             <Overview title="India" overview={overview} lastupdatedtime={total.lastupdatedtime}/>
           </div>
+          <div class="col-md-6">
+            <Overview title="Global" overview={global_overview} lastupdatedtime={global_update_date}/>
+          </div>
         {:else}
           <div class="col-md-12">
             <Overview title="India" overview={overview} lastupdatedtime={total.lastupdatedtime}/>
           </div>
         {/if}
-
-
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="row">
         {#if global_update_date}
-          <div class="col-md-6">
-            <Overview title="Global" overview={global_overview} lastupdatedtime={global_update_date}/>
+          <div class="col-md-6 col-xs-12 mt-3">
+            <StateWiseTable statewise={statewise} state_data={state_data}/>
+          </div>
+          <div class="col-md-6 mt-3 table-responsive">
+            <h2 class="h2 text-center mb-3">Countries</h2>
+            <table class="table" id="countries">
+              <thead class="black white-text">
+              <tr>
+                <th scope="col">Country</th>
+                <th scope="col">Confirmed</th>
+                <th scope="col">Active</th>
+                <th scope="col">Recovered</th>
+                <th scope="col">Deaths</th>
+              </tr>
+              </thead>
+              <tbody>
+              {#each countries as c}
+                <tr>
+                  <th scope="row">{c.Country}</th>
+                  <td>{c.TotalConfirmed}</td>
+                  <td>{c.TotalConfirmed - c.TotalRecovered}</td>
+                  <td>{c.TotalRecovered}</td>
+                  <td>{c.TotalDeaths}</td>
+                </tr>
+              {/each}
+              </tbody>
+            </table>
+          </div>
+        {:else}
+          <div class="col-md-12 mt-3">
+            <StateWiseTable statewise={statewise} state_data={state_data}/>
           </div>
         {/if}
       </div>
     </div>
-    {#if global_update_date}
-      <div class="col-md-6 mt-3">
-        <StateWiseTable statewise={statewise} state_data={state_data} />
-      </div>
-    {:else}
-      <div class="col-md-12 mt-3">
-        <StateWiseTable statewise={statewise} state_data={state_data} />
-      </div>
-
-    {/if}
-    {#if global_update_date}
-      <div class="col-md-6 mt-3">
-        <h2 class="h2 text-center mb-3">Countries</h2>
-        <table class="table" id="countries">
-          <thead class="black white-text">
-          <tr>
-            <th scope="col">Country</th>
-            <th scope="col">Confirmed</th>
-            <th scope="col">Active</th>
-            <th scope="col">Recovered</th>
-            <th scope="col">Deaths</th>
-          </tr>
-          </thead>
-          <tbody>
-          {#each countries as c}
-            <tr>
-              <th scope="row">{c.Country}</th>
-              <td>{c.TotalConfirmed}</td>
-              <td>{c.TotalConfirmed - c.TotalRecovered}</td>
-              <td>{c.TotalRecovered}</td>
-              <td>{c.TotalDeaths}</td>
-            </tr>
-          {/each}
-          </tbody>
-        </table>
-      </div>
-    {/if}
     <div class="col-md-12">
       <Chart/>
     </div>
-
   </div>
 </div>
