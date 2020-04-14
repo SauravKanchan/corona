@@ -105,7 +105,6 @@
       }
     }
     remaining_states = remaining_states
-    console.log(remaining_states)
   }
 
   update_remaing_states()

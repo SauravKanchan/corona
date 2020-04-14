@@ -12,5 +12,11 @@ router('/', () =>
   )
 )
 
+router('/district', () =>
+  import(/* webpackChunkName: "index" */ './views/District.svelte').then(module =>
+    page.set({ component: module.default })
+  )
+)
+
 
 export default router
