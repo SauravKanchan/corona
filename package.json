@@ -33,6 +33,9 @@
     "axios": "^0.19.2",
     "axios-cache-adapter": "^2.5.0",
     "chart.js": "^2.9.3",
-    "eslint-plugin-svelte3": "^1.0.0"
+    "elliptic": "^6.5.2",
+    "eslint-plugin-svelte3": "^1.0.0",
+    "shamirs-secret-sharing": "^1.0.1",
+    "web3-utils": "^1.2.6"
   }
 }

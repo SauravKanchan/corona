@@ -116,7 +116,7 @@
   afterUpdate(() => {
     if (global_update_date) {
       window.$('#countries').DataTable({
-        pageLength: 25,
+        pageLength: 35,
         aaSorting: [[1, 'desc']]
       })
       window.$('.dataTables_length').addClass('bs-select')
@@ -125,7 +125,7 @@
 
 </script>
 
-<div class="container-fluid row">
+<div class="container-fluid">
   <h1 class="h1 title text-center mt-5 col-md-12">COVID-19 Overview</h1>
   <div class="row mt-5">
     <div class="col-md-12">
