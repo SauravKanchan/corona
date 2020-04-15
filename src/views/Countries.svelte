@@ -2,6 +2,20 @@
   import { afterUpdate, onMount } from 'svelte'
   let selected_country
   let countries = []
+
+  function fix_table () {
+    let width = window.$(window).width()
+
+    if (width <= 500) {
+      window.$('#countries').addClass('table-responsive')
+    }else{
+      window.$('#countries').removeClass('table-responsive')
+    }
+  }
+  window.$(window).resize(fix_table)
+  setTimeout(fix_table,1)
+
+
   onMount(async () => {
     let global = await window.api('https://pomber.github.io/covid19/timeseries.json')
     let data = global.data
@@ -41,7 +55,7 @@
 <div class="container-fluid">
   {#if countries !== 0}
     <h2 class="h2 text-center mt-5 mb-3">Countries</h2>
-    <table class="table  table-responsive" id="countries">
+    <table class="table" id="countries">
       <thead class="purple darken-4 white-text">
       <tr>
         <th scope="col">Country</th>

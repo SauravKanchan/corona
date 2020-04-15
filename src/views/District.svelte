@@ -1,6 +1,18 @@
 <script>
   import { afterUpdate, onMount } from 'svelte'
 
+  function fix_table () {
+    let width = window.$(window).width()
+
+      if (width <= 500) {
+        window.$('#districtTable').addClass('table-responsive')
+      }else{
+        window.$('#districtTable').removeClass('table-responsive')
+      }
+  }
+  window.$(window).resize(fix_table)
+  setTimeout(fix_table,1)
+
   let district = []
   onMount(async () => {
     let state_res = await window.api.get('https://api.covid19india.org/state_district_wise.json')
@@ -15,11 +27,12 @@
     }
 
     district = district
+    fix_table()
 
   })
   afterUpdate(() => {
     if (district.length) {
-      window.$('#dtBasicExample').DataTable({
+      window.$('#districtTable').DataTable({
         pageLength: 25,
         aaSorting: [[2, 'desc']]
       })
@@ -27,11 +40,12 @@
     }
   })
 
+
 </script>
 <div class="container-fluid mt-5">
   {#if district.length }
     <h2 class="text-center title h2">All {district.length} Districts</h2>
-    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+    <table id="districtTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
       <thead class="purple darken-2 white-text">
       <tr>
         <th class="th-sm">District
@@ -54,6 +68,8 @@
       <tr>
         <th class="th-sm">District
         </th>
+        <th class="th-sm">State</th>
+
         <th class="th-sm">Confirmed
         </th>
       </tr>
