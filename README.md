@@ -1,5 +1,6 @@
 # COVID19 Svelte App
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSauravKanchan%2Fcorona.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSauravKanchan%2Fcorona?ref=badge_shield)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/549a6859-c5d4-4141-8b8d-2016472f00e0/deploy-status)](https://app.netlify.com/sites/covin/deploys)
 
 
 Install the dependencies...
