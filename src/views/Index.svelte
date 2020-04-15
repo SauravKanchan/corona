@@ -82,40 +82,44 @@
       state_data[state] = state_data[state].sort(sortByProperty('confirmed'))
     }
     state_data = state_data
-    let global
-    try {
-      global = await window.api.get('https://api.covid19api.com/summary')
-    } catch (e) {
-      global = await window.api.get('https://cors-anywhere.herokuapp.com/https://api.covid19api.com/summary')
-    }
-    let global_data = global.data.Global
-    countries = global.data.Countries
+    let global = await window.api('https://pomber.github.io/covid19/timeseries.json')
+    let data = global.data
     global_overview = [
       {
-        number: global_data.TotalConfirmed,
+        number: 0,
         title: 'Confirmed',
         class: 'danger',
-        delta: global_data.NewConfirmed
+        delta: 0
       },
       {
-        number: global_data.TotalRecovered,
+        number: 0,
         title: 'Recovered',
         class: 'success',
-        delta: global_data.NewRecovered
+        delta: 0
       },
       {
-        number: global_data.TotalConfirmed - global_data.TotalRecovered,
+        number: 0,
         title: 'Active',
         class: 'info',
-        delta: null
+        delta: 0
       },
       {
-        number: global_data.TotalDeaths,
+        number: 0,
         title: 'Deaths',
         class: 'warning',
-        delta: global_data.NewDeaths
+        delta: 0
       }
     ]
+    for (let country in data) {
+      global_overview[0].number += data[country][data[country].length - 1].confirmed
+      global_overview[1].number += data[country][data[country].length - 1].recovered
+      global_overview[2].number += data[country][data[country].length - 1].confirmed -
+        data[country][data[country].length - 1].recovered - data[country][data[country].length - 1].deaths
+      global_overview[3].number += data[country][data[country].length - 1].deaths
+    }
+
+    let global_data = global.data.Global
+
     let date = new Date(global.data.Date)
     global_update_date = date.toLocaleString().replace(',', '')
 
@@ -138,18 +142,12 @@
   <div class="row mt-5">
     <div class="col-md-12">
       <div class="row">
-        {#if global_update_date}
-          <div class="col-md-6" style="border-right: 1px solid grey ">
-            <Overview title="India" overview={overview} lastupdatedtime={total.lastupdatedtime}/>
-          </div>
-          <div class="col-md-6">
-            <Overview title="Global" overview={global_overview} lastupdatedtime={global_update_date}/>
-          </div>
-        {:else}
-          <div class="col-md-12">
-            <Overview title="India" overview={overview} lastupdatedtime={total.lastupdatedtime}/>
-          </div>
-        {/if}
+        <div class="col-md-6" style="border-right: 1px solid grey ">
+          <Overview title="India" overview={overview} lastupdatedtime={total.lastupdatedtime}/>
+        </div>
+        <div class="col-md-6">
+          <Overview title="Global" overview={global_overview}/>
+        </div>
       </div>
     </div>
     <div class="col-md-12">

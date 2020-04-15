@@ -9,7 +9,7 @@
     <div class="row mb-3">
       <div class="col-md-12">
         <h1 class="title h1 text-center">{title}</h1>
-        <h3 class="h6 text-muted text-center">Last Update at {lastupdatedtime} </h3>
+        <h3 class="h6 text-muted text-center">{#if lastupdatedtime}Last Update at {lastupdatedtime}{:else} &nbsp; {/if}</h3>
       </div>
     </div>
   </div>
