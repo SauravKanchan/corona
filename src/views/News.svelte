@@ -1,7 +1,12 @@
 <script>
   let news;
   (async () => {
-    let res = await api.get('https://raw.githubusercontent.com/atapas/covid-19/3b03d46985af80d2d458ff5031ddae23b2beccd0/src/js/utils/top-headlines.json')
+    let res;
+    try{
+      res = await api.get('http://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=09037b156f3e4b27b044ef4c8fd44aaa');
+    }catch (e) {
+      res = await api.get('https://raw.githubusercontent.com/atapas/covid-19/3b03d46985af80d2d458ff5031ddae23b2beccd0/src/js/utils/top-headlines.json')
+    }
     news = res.data.articles
     console.log(news[0])
   })()
