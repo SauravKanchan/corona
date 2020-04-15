@@ -51,7 +51,7 @@
             yAxes: [{
               scaleLabel: {
                 display: true,
-                labelString: 'No. of cases',
+                labelString: 'Percentage',
               },
               // stacked: true
             }],

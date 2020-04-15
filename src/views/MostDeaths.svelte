@@ -2,23 +2,18 @@
   export let statewise
   const Chart = require('chart.js')
   import { afterUpdate } from 'svelte'
-
+  let state_local
   afterUpdate(async () => {
+    state_local = statewise
+    state_local.sort((a,b)=>{return b.deaths-a.deaths})
     let labels = []
     let data = []
-    statewise.sort((a,b)=>{
-      return (b.recovered/b.confirmed - a.recovered/a.confirmed)
-    })
-    for(let s in statewise.slice(0,5)){
-      if (statewise[s].state === "Andaman and Nicobar Islands"){
-        labels.push("Andaman & N")
-      }else{
-        labels.push(statewise[s].state)
-      }
-      data.push(statewise[s].recovered*100/statewise[s].confirmed)
+    for(let s in state_local.slice(0,5)){
+      labels.push(state_local[s].state)
+      data.push(state_local[s].deaths)
     }
-    let ctx = document.getElementById('recovereChart').getContext('2d')
-    let recovereChart = new Chart(ctx, {
+    let ctx = document.getElementById('mostDeath').getContext('2d')
+    let mostDeath = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: labels,
@@ -26,19 +21,28 @@
           label: 'No of Cases',
           data: data,
           backgroundColor: [
-            '#2e7d32',
-            '#558b2f',
-            '#43a047',
-            '#8bc34a',
-            '#aed581',
-            '#c5e1a5'
+            '#b71c1c',
+            '#f44336',
+            '#ef5350',
+            '#e57373',
+            '#ef9a9a',
+            '#ffcdd2'
           ],
+          borderColor: [
+            '#b71c1c',
+            '#f44336',
+            '#ef5350',
+            '#e57373',
+            '#ef9a9a',
+            '#ffcdd2'
+          ],
+          borderWidth: 1
         }]
       },
       options: {
         title: {
           display: true,
-          text: 'Most recovered state in India',
+          text: 'Most deaths',
           fontSize: 25
         },
         legend: {
@@ -49,9 +53,6 @@
         },
         scales: {
           yAxes: [{
-            ticks: {
-              beginAtZero: true
-            },
             scaleLabel: {
               display: true,
               labelString: 'No. of cases'
@@ -68,6 +69,6 @@
     })
   })
 </script>
-{#if statewise}
-<canvas id="recovereChart" class="w-100" height="500"></canvas>
+{#if state_local}
+<canvas id="mostDeath" class="w-100" height="500"></canvas>
 {/if}

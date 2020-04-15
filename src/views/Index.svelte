@@ -5,6 +5,7 @@
   import Chart from './Chart.svelte'
   import StateWiseTable from './StatewiseTable.svelte'
   import MostAffected from './MostAffected.svelte'
+  import MostDeaths from './MostDeaths.svelte'
   import RecoveredState from './RecoveredState.svelte'
   import { afterUpdate } from 'svelte'
   import PercentageChange from './PercentageChange.svelte'
@@ -200,6 +201,16 @@
         </div>
         <div class="col-md-6">
           <RecoveredState statewise={statewise} />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <MostDeaths statewise={statewise} />
+        </div>
+        <div class="col-md-6">
+
         </div>
       </div>
     </div>
