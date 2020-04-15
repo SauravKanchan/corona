@@ -6,12 +6,19 @@
   afterUpdate(async () => {
     let labels = []
     let data = []
+    statewise.sort((a,b)=>{
+      return (b.recovered/b.confirmed - a.recovered/a.confirmed)
+    })
     for(let s in statewise.slice(0,5)){
-      labels.push(statewise[s].state)
-      data.push(statewise[s].confirmed)
+      if (statewise[s].state === "Andaman and Nicobar Islands"){
+        labels.push("Andaman & N")
+      }else{
+        labels.push(statewise[s].state)
+      }
+      data.push(statewise[s].recovered*100/statewise[s].confirmed)
     }
-    let ctx = document.getElementById('mostAfffectedChart').getContext('2d')
-    let mostAfffectedChart = new Chart(ctx, {
+    let ctx = document.getElementById('recovereChart').getContext('2d')
+    let recovereChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: labels,
@@ -19,20 +26,20 @@
           label: 'No of Cases',
           data: data,
           backgroundColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
+            '#2e7d32',
+            '#388e3c',
+            '#43a047',
+            '#4caf50',
+            '#66bb6a',
+            '#81c784'
           ],
           borderColor: [
-            'rgb(255, 165, 0)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
+            '#2e7d32',
+            '#388e3c',
+            '#43a047',
+            '#4caf50',
+            '#66bb6a',
+            '#81c784'
           ],
           borderWidth: 1
         }]
@@ -40,7 +47,7 @@
       options: {
         title: {
           display: true,
-          text: 'Most affected state in India',
+          text: 'Most recovered state in India',
           fontSize: 25
         },
         legend: {
@@ -51,6 +58,9 @@
         },
         scales: {
           yAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
             scaleLabel: {
               display: true,
               labelString: 'No. of cases'
@@ -68,5 +78,5 @@
   })
 </script>
 {#if statewise}
-<canvas id="mostAfffectedChart" class="w-100" height="500"></canvas>
+<canvas id="recovereChart" class="w-100" height="500"></canvas>
 {/if}
