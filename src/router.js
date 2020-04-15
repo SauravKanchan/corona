@@ -24,5 +24,10 @@ router('/news', () =>
   )
 )
 
+router('/information', () =>
+  import(/* webpackChunkName: "index" */ './views/Information.svelte').then(module =>
+    page.set({ component: module.default })
+  )
+)
 
 export default router
