@@ -34,6 +34,7 @@
         data: {
           datasets: [{
             label: 'Percentage Change',
+            backgroundColor: 'rgba(252, 132, 3,0.4)',
             borderColor: 'red',
             data: data
           }],
@@ -54,6 +55,13 @@
                 labelString: 'No. of cases',
               },
               // stacked: true
+            }],
+            xAxes:[{
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 20
+              },
+              distribution: 'series'
             }]
           }
 
