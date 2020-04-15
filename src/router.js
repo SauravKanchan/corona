@@ -30,4 +30,10 @@ router('/information', () =>
   )
 )
 
+router('/countries', () =>
+  import(/* webpackChunkName: "index" */ './views/Countries.svelte').then(module =>
+    page.set({ component: module.default })
+  )
+)
+
 export default router

@@ -10,7 +10,6 @@
   import PercentageChange from './PercentageChange.svelte'
   import PieChart from './PieChart.svelte'
 
-  import { afterUpdate } from 'svelte'
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -124,16 +123,6 @@
     global_update_date = date.toLocaleString().replace(',', '')
 
   })()
-
-  afterUpdate(() => {
-    if (global_update_date) {
-      window.$('#countries').DataTable({
-        pageLength: 35,
-        aaSorting: [[1, 'desc']]
-      })
-      window.$('.dataTables_length').addClass('bs-select')
-    }
-  })
 
 </script>
 

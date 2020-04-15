@@ -26,6 +26,9 @@
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
+        <a href="/countries" class="nav-link">Countries</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/district">District</a>
       </li>
       <li class="nav-item">
