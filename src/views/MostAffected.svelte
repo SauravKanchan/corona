@@ -1,24 +1,30 @@
 <script>
-  export let cases_time_series
+  export let statewise
   const Chart = require('chart.js')
   import { afterUpdate } from 'svelte'
 
   afterUpdate(async () => {
+    let labels = []
+    let data = []
+    for(let s in statewise.slice(0,5)){
+      labels.push(statewise[s].state)
+      data.push(statewise[s].confirmed)
+    }
     let ctx = document.getElementById('myChart').getContext('2d')
     let myChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: [' 0-10', '10-100', '100-500', '500-1000', '1000-5000', '5000-10000'],
+        labels: labels,
         datasets: [{
-          label: 'No of Days',
-          data: [23, 10, 9, 5, 9, 5],
+          label: 'No of Cases',
+          data: data,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.8)',
-            'rgba(54, 162, 235, 0.8)',
-            'rgba(255, 206, 86, 0.8)',
-            'rgba(75, 192, 192, 0.8)',
-            'rgba(153, 102, 255, 0.8)',
-            'rgba(255, 159, 64, 0.8)'
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
           ],
           borderColor: [
             'rgb(255, 165, 0)',
@@ -34,11 +40,11 @@
       options: {
         title: {
           display: true,
-          text: 'Growth in Covid19 Cases in India',
+          text: 'Most affected state in India',
           fontSize: 25
         },
         legend: {
-          display: true,
+          display: false,
           labels: {
             fontColor: '#000'
           }
@@ -47,13 +53,13 @@
           yAxes: [{
             scaleLabel: {
               display: true,
-              labelString: 'No. of days'
+              labelString: 'No. of cases'
             }
           }],
           xAxes: [{
             scaleLabel: {
               display: true,
-              labelString: 'No. of Cases'
+              labelString: 'States'
             }
           }]
         }
@@ -61,4 +67,6 @@
     })
   })
 </script>
-<canvas id="myChart" width="400" height="300"></canvas>
+{#if statewise}
+<canvas id="myChart" class="w-100" height="500"></canvas>
+{/if}

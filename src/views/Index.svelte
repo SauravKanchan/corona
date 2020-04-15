@@ -4,7 +4,7 @@
   import Overview from './Overview.svelte'
   import Chart from './Chart.svelte'
   import StateWiseTable from './StatewiseTable.svelte'
-  // import IndiaBarGraph from './IndiaBarGraph.svelte'
+  import IndiaBarGraph from './MostAffected.svelte'
   import { afterUpdate } from 'svelte'
   import PercentageChange from './PercentageChange.svelte'
 
@@ -191,6 +191,13 @@
     </div>
     <div class="col-md-12 mt-5">
       <PercentageChange  cases_time_series={cases_time_series}/>
+    </div>
+    <div class="col-md-12 mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <IndiaBarGraph statewise={statewise} />
+        </div>
+      </div>
     </div>
   </div>
 </div>

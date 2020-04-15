@@ -6,6 +6,7 @@
 
   afterUpdate(() => {
     let series = [{ dailyconfirmed: 0, date: '', totalconfirmed: 0 }].concat(cases_time_series)
+    series = series.slice(Math.max(series.length -80,0), series.length)
     if (series.length > 1) {
       let labels = []
       let data = [0]
@@ -21,10 +22,8 @@
         } else {
           percent = current
         }
-        console.log(current, prev, percent)
         data.push(percent)
       }
-      console.log(data)
       let ctx = document.getElementById('percentageChart')
       let stackedLine = new Chart(ctx, {
         // The type of chart we want to create
