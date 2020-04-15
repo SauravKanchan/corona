@@ -157,7 +157,7 @@
           <div class="col-md-6 col-xs-12 mt-3 table-responsive">
             <h2 class="h2 text-center mb-3">Countries</h2>
             <table class="table" id="countries">
-              <thead class="black white-text">
+              <thead class="purple darken-4 white-text">
               <tr>
                 <th scope="col">Country</th>
                 <th scope="col">Confirmed</th>
@@ -190,7 +190,7 @@
       <Chart/>
     </div>
     <div class="col-md-12 mt-5">
-      <PercentageChange />
+      <PercentageChange  cases_time_series={cases_time_series}/>
     </div>
   </div>
 </div>

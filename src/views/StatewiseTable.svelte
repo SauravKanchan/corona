@@ -27,7 +27,7 @@
 <h2 class="h2 text-center mb-3">State and District Wise</h2>
 <div class="table-responsive">
   <table class="table">
-    <thead class="black white-text">
+    <thead class="purple darken-4 white-text">
     <tr>
       <th scope="col">#</th>
       <th scope="col">State</th>
