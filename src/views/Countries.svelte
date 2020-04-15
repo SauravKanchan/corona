@@ -41,7 +41,7 @@
 <div class="container-fluid">
   {#if countries !== 0}
     <h2 class="h2 text-center mt-5 mb-3">Countries</h2>
-    <table class="table" id="countries">
+    <table class="table  table-responsive" id="countries">
       <thead class="purple darken-4 white-text">
       <tr>
         <th scope="col">Country</th>

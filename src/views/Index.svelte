@@ -8,6 +8,7 @@
   import MostDeaths from './MostDeaths.svelte'
   import RecoveredState from './RecoveredState.svelte'
   import PercentageChange from './PercentageChange.svelte'
+  import Country from './Country.svelte'
   import PieChart from './PieChart.svelte'
 
 
@@ -156,7 +157,7 @@
       <Chart/>
     </div>
     <div class="col-md-12 mt-5">
-      <PercentageChange cases_time_series={cases_time_series}/>
+      <Country name="India"></Country>
     </div>
   </div>
 </div>
