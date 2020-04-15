@@ -200,7 +200,7 @@
       options: {
         title: {
           display: true,
-          text: `Statewise cases of COVID-19 cases in India of last ${days}`,
+          text: `Statewise cases of COVID-19 in India of last ${days}`,
           fontSize: 25
         },
         scales: {
@@ -210,6 +210,12 @@
               labelString: 'No. of cases'
             }
           }],
+          xAxes: [{   ticks: {
+              autoSkip: true,
+              maxTicksLimit: 20
+            },
+            distribution: 'series'
+          }]
         }
 
       }

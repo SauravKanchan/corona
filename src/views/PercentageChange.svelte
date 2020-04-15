@@ -4,6 +4,7 @@
   const Chart = require('chart.js')
   export let cases_time_series
 
+
   afterUpdate(() => {
     let series = [{ dailyconfirmed: 0, date: '', totalconfirmed: 0 }].concat(cases_time_series)
     series = series.slice(Math.max(series.length -80,0), series.length)

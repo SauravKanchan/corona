@@ -7,8 +7,10 @@
   import MostAffected from './MostAffected.svelte'
   import MostDeaths from './MostDeaths.svelte'
   import RecoveredState from './RecoveredState.svelte'
-  import { afterUpdate } from 'svelte'
   import PercentageChange from './PercentageChange.svelte'
+  import PieChart from './PieChart.svelte'
+
+  import { afterUpdate } from 'svelte'
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -210,7 +212,7 @@
           <MostDeaths statewise={statewise} />
         </div>
         <div class="col-md-6">
-
+          <PieChart pieData={total} />
         </div>
       </div>
     </div>
