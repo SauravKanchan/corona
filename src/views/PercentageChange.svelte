@@ -3,6 +3,7 @@
 
   const Chart = require('chart.js')
   export let cases_time_series
+  export let name
 
 
   afterUpdate(() => {
@@ -45,7 +46,7 @@
         options: {
           title: {
             display: true,
-            text: 'Percentage change in COVID-19 cases in India'
+            text: `Percentage change in COVID-19 cases in ${name}`
           },
 
           scales: {

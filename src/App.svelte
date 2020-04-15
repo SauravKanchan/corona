@@ -41,3 +41,8 @@
   </div>
 </nav>
 <svelte:component this={$page.component} {...$page.props} />
+<footer class="page-footer font-small indigo mt-5">
+<div class="text-center py-3">Made with <i class="fas fa-heart"></i> by
+    <a href="https://saurav.tech/">Saurav Kanchan</a>, <a href="https://www.linkedin.com/in/akhil-kedare">Akhil Kedare</a> & Nikita Chorge
+  </div>
+</footer>

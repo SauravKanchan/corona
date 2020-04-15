@@ -121,5 +121,5 @@
     <Overview overview={overview} title={name}></Overview>
   {/if}
   <canvas id="country" class="w-100 mb-5" height=500></canvas>
-  <PercentageChange cases_time_series={cases_time_series}></PercentageChange>
+  <PercentageChange cases_time_series={cases_time_series} name={name}></PercentageChange>
 </div>
