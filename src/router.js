@@ -36,4 +36,10 @@ router('/countries', () =>
   )
 )
 
+router('/country/:name', ctx =>
+  import(/* webpackChunkName: "hello" */ './views/Country.svelte').then(module =>
+    page.set({ component: module.default, props: ctx.params })
+  )
+)
+
 export default router

@@ -1,6 +1,6 @@
 <script>
   import { afterUpdate, onMount } from 'svelte'
-
+  let selected_country
   let countries = []
   onMount(async () => {
     let global = await window.api('https://pomber.github.io/covid19/timeseries.json')
@@ -20,15 +20,24 @@
 
   afterUpdate(() => {
     if (countries.length !== 0) {
-      window.$('#countries').DataTable({
-        pageLength: 35,
-        aaSorting: [[1, 'desc']]
-      })
-      window.$('.dataTables_length').addClass('bs-select')
+      if ( ! window.$.fn.DataTable.isDataTable( '#countries' ) ) {
+        window.$('#countries').DataTable({
+          pageLength: 50,
+          aaSorting: [[1, 'desc']]
+        })
+        window.$('.dataTables_length').addClass('bs-select')
+      }
     }
   })
 
+  function country_link (e) {
+    let link = document.getElementById('cl')
+    link.href = "/country/"+e.target.getAttribute('country')
+    link.click()
+  }
+
 </script>
+<a href={selected_country} class="d-none" id="cl"></a>
 <div class="container-fluid">
   {#if countries !== 0}
     <h2 class="h2 text-center mt-5 mb-3">Countries</h2>
@@ -44,12 +53,12 @@
       </thead>
       <tbody>
       {#each countries as c}
-        <tr>
-          <th scope="row">{c.country}</th>
-          <td>{c.confirmed}</td>
-          <td>{c.active}</td>
-          <td>{c.recovered}</td>
-          <td>{c.deaths   }</td>
+        <tr on:click={country_link} >
+          <th country={c.country} scope="row">{c.country}</th>
+          <td country={c.country}>{c.confirmed}</td>
+          <td country={c.country}>{c.active}</td>
+          <td country={c.country}>{c.recovered}</td>
+          <td country={c.country}>{c.deaths }</td>
         </tr>
       {/each}
       </tbody>
