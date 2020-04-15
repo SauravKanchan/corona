@@ -1,12 +1,41 @@
 <script>
   import { onMount } from 'svelte'
   import PercentageChange from './PercentageChange.svelte'
+  import Overview from './Overview.svelte'
 
   export let name
+  export let display
   const Chart = require('chart.js')
   let data
   let labels = []
   let cases_time_series = [{ dailyconfirmed: 0, date: '', totalconfirmed: 0 }]
+  let overview = [
+    {
+      number: 0,
+      title: 'Confirmed',
+      class: 'danger',
+      delta: 0
+    },
+    {
+      number: 0,
+      title: 'Recovered',
+      class: 'success',
+      delta: 0
+    },
+    {
+      number: 0,
+      title: 'Active',
+      class: 'info',
+      delta: 0
+    },
+    {
+      number: 0,
+      title: 'Deaths',
+      class: 'warning',
+      delta: 0
+    }
+  ]
+
   let graphData = [{
     label: 'Confirmed',
     fill: false,
@@ -28,7 +57,6 @@
   onMount(async () => {
     let global = await window.api('https://pomber.github.io/covid19/timeseries.json')
     data = [{ confirmed: 0 }].concat(global.data[name])
-    console.log(data.slice(1))
     for (let element in data.slice(1)) {
       element = parseInt(element) + 1
       labels.push(data[element].date)
@@ -42,6 +70,11 @@
       })
 
     }
+    overview[0].number = data[data.length - 1].confirmed
+    overview[1].number = data[data.length - 1].recovered
+    overview[2].number = data[data.length - 1].confirmed - data[data.length - 1].recovered - data[data.length - 1].deaths
+    overview[3].number = data[data.length - 1].deaths
+
     cases_time_series = cases_time_series
     let ctx = document.getElementById('country').getContext('2d')
     let chart = new Chart(ctx, {
@@ -84,7 +117,9 @@
   })
 </script>
 <div class="container-fluid mt-5">
-  <h1 class="h1 title text-center col-md-12">{name}</h1>
+  {#if !display}
+    <Overview overview={overview} title={name}></Overview>
+  {/if}
   <canvas id="country" class="w-100 mb-5" height=500></canvas>
   <PercentageChange cases_time_series={cases_time_series}></PercentageChange>
 </div>

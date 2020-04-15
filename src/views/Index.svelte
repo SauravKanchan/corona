@@ -157,7 +157,7 @@
       <Chart/>
     </div>
     <div class="col-md-12 mt-5">
-      <Country name="India"></Country>
+      <Country name="India" display={true}></Country>
     </div>
   </div>
 </div>

@@ -8,7 +8,6 @@
       res = await api.get('https://raw.githubusercontent.com/atapas/covid-19/3b03d46985af80d2d458ff5031ddae23b2beccd0/src/js/utils/top-headlines.json')
     }
     news = res.data.articles
-    console.log(news[0])
   })()
 </script>
 
