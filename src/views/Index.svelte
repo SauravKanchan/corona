@@ -154,67 +154,22 @@
     </div>
     <div class="col-md-12">
       <div class="row">
-        {#if global_update_date}
-          <div class="col-md-6 col-xs-12 mt-3">
-            <StateWiseTable statewise={statewise} state_data={state_data}/>
-          </div>
-          <div class="col-md-6 col-xs-12 mt-3 table-responsive">
-            <h2 class="h2 text-center mb-3">Countries</h2>
-            <table class="table" id="countries">
-              <thead class="purple darken-4 white-text">
-              <tr>
-                <th scope="col">Country</th>
-                <th scope="col">Confirmed</th>
-                <th scope="col">Active</th>
-                <th scope="col">Recovered</th>
-                <th scope="col">Deaths</th>
-              </tr>
-              </thead>
-              <tbody>
-              {#each countries as c}
-                <tr>
-                  <th scope="row">{c.Country}</th>
-                  <td>{c.TotalConfirmed}</td>
-                  <td>{c.TotalConfirmed - c.TotalRecovered}</td>
-                  <td>{c.TotalRecovered}</td>
-                  <td>{c.TotalDeaths}</td>
-                </tr>
-              {/each}
-              </tbody>
-            </table>
-          </div>
-        {:else}
-          <div class="col-md-12 mt-3">
-            <StateWiseTable statewise={statewise} state_data={state_data}/>
-          </div>
-        {/if}
+        <div class="col-md-6 col-xs-12 mt-3">
+          <StateWiseTable statewise={statewise} state_data={state_data}/>
+        </div>
+        <div class="col-md-6 col-xs-12 mt-3 table-responsive">
+          <MostAffected statewise={statewise}></MostAffected>
+          <RecoveredState statewise={statewise}></RecoveredState>
+          <MostDeaths statewise={statewise}></MostDeaths>
+          <PieChart pieData={total}></PieChart>
+        </div>
       </div>
     </div>
     <div class="col-md-12">
       <Chart/>
     </div>
     <div class="col-md-12 mt-5">
-      <PercentageChange  cases_time_series={cases_time_series}/>
-    </div>
-    <div class="col-md-12 mt-5">
-      <div class="row">
-        <div class="col-md-6">
-          <MostAffected statewise={statewise} />
-        </div>
-        <div class="col-md-6">
-          <RecoveredState statewise={statewise} />
-        </div>
-      </div>
-    </div>
-    <div class="col-md-12 mt-5">
-      <div class="row">
-        <div class="col-md-6">
-          <MostDeaths statewise={statewise} />
-        </div>
-        <div class="col-md-6">
-          <PieChart pieData={total} />
-        </div>
-      </div>
+      <PercentageChange cases_time_series={cases_time_series}/>
     </div>
   </div>
 </div>

@@ -26,7 +26,7 @@
 </style>
 <h2 class="h2 text-center">State and District Wise</h2>
 <div class="table-responsive">
-  <table class="table mt-5" id="stateTable">
+  <table class="table" id="stateTable">
     <thead class="purple darken-4 white-text">
     <tr>
       <th scope="col">#</th>
