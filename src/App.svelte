@@ -37,6 +37,9 @@
       <li class="nav-item">
         <a href="/information" class="nav-link">Information</a>
       </li>
+      <li class="nav-item">
+        <a href="/faq" class="nav-link">FAQ</a>
+      </li>
     </ul>
   </div>
 </nav>
