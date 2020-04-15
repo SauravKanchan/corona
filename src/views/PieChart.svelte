@@ -18,7 +18,7 @@
     }
     let ctx = document.getElementById('pieChart')
     let myPieChart = new Chart(ctx, {
-      type: 'pie',
+      type: 'doughnut',
       data: data,
       options: {title: {
           display: true,
