@@ -88,7 +88,7 @@
       <tbody>
       {#each countries as c}
         <tr on:click={country_link} >
-          <td country={c.country}>{#if flag[c.country]}{flag[c.country]["flag"]}{:else}<img class="img-thumbnail" width="25" height="25" src="{c.countryInfo.flag}">{/if}</td>
+          <td country={c.country}>{#if flag[c.country]}{flag[c.country]["flag"]}{:else}<img country={c.country} class="img-thumbnail" width="25" height="25" src="{c.countryInfo.flag}">{/if}</td>
           <th country={c.country} scope="row">{c.country}</th>
           <td country={c.country}>{c.cases}</td>
           <td country={c.country} class="text-danger">{#if c.todayCases}+{c.todayCases}{/if}</td>
