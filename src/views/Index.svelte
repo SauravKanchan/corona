@@ -7,7 +7,6 @@
   import MostAffected from './MostAffected.svelte'
   import MostDeaths from './MostDeaths.svelte'
   import RecoveredState from './RecoveredState.svelte'
-  import PercentageChange from './PercentageChange.svelte'
   import Country from './Country.svelte'
   import PieChart from './PieChart.svelte'
 
@@ -84,7 +83,6 @@
     state_data = state_data
     let global = await window.api('https://corona.lmao.ninja/all')
     let data = global.data
-    console.log(data)
     global_overview = [
       {
         number: data.cases,

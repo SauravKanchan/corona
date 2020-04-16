@@ -26,7 +26,7 @@
     answer: 'No'
   }, {
     ques: 'What are your sources? How is the data gathered for this project ?',
-    answer: 'The data is validated by a group of volunteers and published into a Google sheet and an API. API is available for all at api.covid19india.org'
+    answer: 'Data is gathered from https://github.com/pomber/covid19 ,api.covid19india.org, https://corona.lmao.ninja/countries'
   },{
     ques: "Why does your website have more positive count than MoH?",
     answer: "MoHFW updates the data at a scheduled time. However, API source updates them based on state press bulletins, official (CM, Health M) handles, PBI, Press Trust of India, ANI reports. These are generally more recent."

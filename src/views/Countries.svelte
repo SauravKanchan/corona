@@ -3,6 +3,16 @@
   let selected_country
   let countries = []
   let flag = []
+  let oldNewMap = {
+    "UK": "United Kingdom",
+    "UAE": "United Arab Emirates",
+    "Taiwan": "Taiwan*",
+    "S. Korea": "Korea, South",
+    "North Macedonia": "Macedonia",
+    "Libyan Arab Jamahiriya": "Libya",
+    "Côte d'Ivoire": "Cote d'Ivoire",
+    "USA": "US"
+  }
 
   function fix_table () {
     let width = window.$(window).width()
@@ -21,19 +31,8 @@
   onMount(async () => {
     flag = await window.api('https://pomber.github.io/covid19/countries.json')
     flag = flag.data
-    let global = await window.api('https://pomber.github.io/covid19/timeseries.json')
-    let data = global.data
-    for (let country in data) {
-      let temp_data = {}
-      temp_data.country = country
-      temp_data.confirmed = data[country][data[country].length - 1].confirmed
-      temp_data.recovered = data[country][data[country].length - 1].recovered
-      temp_data.deaths = data[country][data[country].length - 1].deaths
-      temp_data.active = temp_data.confirmed - temp_data.recovered - temp_data.deaths
-      countries.push(temp_data)
-    }
-    countries = countries
-
+    let global = await window.api('https://corona.lmao.ninja/countries')
+    countries = global.data
   })
 
   afterUpdate(() => {
@@ -51,7 +50,13 @@
 
   function country_link (e) {
     let link = document.getElementById('cl')
-    link.href = "/country/"+e.target.getAttribute('country')
+    let count = e.target.getAttribute('country');
+    console.log(oldNewMap, count)
+    if(Object.keys(oldNewMap).includes(count)){
+      count = oldNewMap[count]
+      console.log(count)
+    }
+    link.href = "/country/"+count
     link.click()
   }
 
@@ -67,20 +72,36 @@
         <th scope="col">Flag</th>
         <th scope="col">Country</th>
         <th scope="col">Confirmed</th>
+        <th scope="col">New Cases</th>
+        <th scope="col">Deaths</th>
+        <th scope="col">New Deaths</th>
         <th scope="col">Active</th>
         <th scope="col">Recovered</th>
-        <th scope="col">Deaths</th>
+        <th scope="col">Cases/1M pop</th>
+        <th scope="col">Deaths/1M pop</th>
+        <th scope="col">Critical</th>
+        <th scope="col">Tests</th>
+        <th scope="col">Tests/1M pop</th>
+        <th scope="col">ISO 2</th>
       </tr>
       </thead>
       <tbody>
       {#each countries as c}
         <tr on:click={country_link} >
-          <td country={c.country}>{#if flag[c.country]}{flag[c.country]["flag"]}{/if}</td>
+          <td country={c.country}>{#if flag[c.country]}{flag[c.country]["flag"]}{:else}<img class="img-thumbnail" width="25" height="25" src="{c.countryInfo.flag}">{/if}</td>
           <th country={c.country} scope="row">{c.country}</th>
-          <td country={c.country}>{c.confirmed}</td>
+          <td country={c.country}>{c.cases}</td>
+          <td country={c.country} class="text-danger">{#if c.todayCases}+{c.todayCases}{/if}</td>
+          <td country={c.country}>{c.deaths }</td>
+          <td country={c.country} class="text-danger">{#if c.todayDeaths}+{c.todayDeaths }{/if}</td>
           <td country={c.country}>{c.active}</td>
           <td country={c.country}>{c.recovered}</td>
-          <td country={c.country}>{c.deaths }</td>
+          <td country={c.country}>{c.casesPerOneMillion}</td>
+          <td country={c.country}>{c.deathsPerOneMillion}</td>
+          <td country={c.country}>{c.critical}</td>
+          <td country={c.country}>{c.tests}</td>
+          <td country={c.country}>{c.testsPerOneMillion}</td>
+          <th country={c.country} scope="row">{c.countryInfo.iso2}</th>
         </tr>
       {/each}
       </tbody>
