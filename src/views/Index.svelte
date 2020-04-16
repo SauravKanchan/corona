@@ -82,45 +82,37 @@
       state_data[state] = state_data[state].sort(sortByProperty('confirmed'))
     }
     state_data = state_data
-    let global = await window.api('https://pomber.github.io/covid19/timeseries.json')
+    let global = await window.api('https://corona.lmao.ninja/all')
     let data = global.data
+    console.log(data)
     global_overview = [
       {
-        number: 0,
+        number: data.cases,
         title: 'Confirmed',
         class: 'danger',
-        delta: 0
+        delta: data.todayCases
       },
       {
-        number: 0,
+        number: data.recovered,
         title: 'Recovered',
         class: 'success',
         delta: 0
       },
       {
-        number: 0,
+        number: data.active,
         title: 'Active',
         class: 'info',
         delta: 0
       },
       {
-        number: 0,
+        number: data.deaths,
         title: 'Deaths',
         class: 'warning',
-        delta: 0
+        delta: data.todayDeaths
       }
     ]
-    for (let country in data) {
-      global_overview[0].number += data[country][data[country].length - 1].confirmed
-      global_overview[1].number += data[country][data[country].length - 1].recovered
-      global_overview[2].number += data[country][data[country].length - 1].confirmed -
-        data[country][data[country].length - 1].recovered - data[country][data[country].length - 1].deaths
-      global_overview[3].number += data[country][data[country].length - 1].deaths
-    }
 
-    let global_data = global.data.Global
-
-    let date = new Date(global.data.Date)
+    let date = new Date(data.updated)
     global_update_date = date.toLocaleString().replace(',', '')
 
   })()
