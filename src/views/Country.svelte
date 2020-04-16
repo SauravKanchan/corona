@@ -70,6 +70,7 @@
     }
   ]
   let global
+  let labels
 
   function update_graph (data, cumulative) {
     let graphData = [
@@ -90,13 +91,19 @@
         borderColor: '#ff4444',
         data: [],
       }]
-    let labels = []
+    labels = []
     for (let element in data.slice(1)) {
       element = parseInt(element) + 1
       labels.push(data[element].date)
-      graphData[0].data.push(data[element].confirmed)
-      graphData[1].data.push(data[element].recovered)
-      graphData[2].data.push(data[element].deaths)
+      if (cumulative) {
+        graphData[0].data.push(data[element].confirmed)
+        graphData[1].data.push(data[element].recovered)
+        graphData[2].data.push(data[element].deaths)
+      } else {
+        graphData[0].data.push(data[element].confirmed - data[element - 1].confirmed)
+        graphData[1].data.push(data[element].recovered - data[element - 1].recovered)
+        graphData[2].data.push(data[element].deaths - data[element - 1].deaths)
+      }
       cases_time_series.push({
         dailyconfirmed: data[element].confirmed - data[element - 1].confirmed,
         date: data[element].date,
@@ -142,7 +149,6 @@
               autoSkip: true,
               maxTicksLimit: 20
             },
-            distribution: 'series'
           }]
         }
       }
@@ -152,13 +158,13 @@
 
   onMount(async () => {
     global = await window.api('https://pomber.github.io/covid19/timeseries.json')
-    data = [{ confirmed: 0 }].concat(global.data[name])
+    data = [{ confirmed: 0, recoverd: 0, deaths: 0 }].concat(global.data[name])
     total_days = data.length - 1
-    update_graph(data.slice(data.length - days, data.length),cumulative)
+    update_graph(data.slice(data.length - days, data.length), cumulative)
   })
 
   function update () {
-    update_graph(data.slice(data.length - days, data.length),cumulative)
+    update_graph(data.slice(data.length - days, data.length), cumulative)
     console.log(days, cumulative)
   }
 </script>
@@ -169,29 +175,26 @@
         <Overview overview={overview} title={name}></Overview>
       </div>
     {/if}
-    <div class="col-md-12">
+    <div class="text-center border border-light p-5 col-md-12">
+      <p class="h4 mb-4">Change parameters of graphs below</p>
       <div class="row">
         <div class="col-md-8">
-          <canvas id="country" class="w-100 mb-5" height=500></canvas>
-        </div>
-        <div class="col-md-4">
-          <div class="text-center border border-light p-5">
-            <p class="h4 mb-4">Change Graph parameters</p>
-            <p class="h5 mt-4">Select graph of</p>
-            <div class="row mt-3">
-              <label class="form-control-label col-md-2" for="CountryDaysId">Days</label>
-              <input type="range" id="CountryDaysId" class="slider col-md-8" bind:value={days} max="{total_days}"
-                     min="1" on:change={update}>
-              <p class="col-md-2 h5">{days}</p>
-            </div>
-            <div class="custom-control custom-switch row">
-              <input type="checkbox" class="custom-control-input" bind:checked={cumulative} on:change={update}
-                     id="cumulativeCountry">
-              <label class="custom-control-label" for="cumulativeCountry">Add previous day values(cumulative)</label>
-            </div>
+          <div class="row">
+            <label class="form-control-label col-md-2" for="CountryDaysId">Days</label>
+            <input type="range" id="CountryDaysId" class="slider col-md-8" bind:value={days} max="{total_days}"
+                   min="1" on:change={update}>
+            <p class="col-md-2 h5">{days}</p>
           </div>
         </div>
+        <div class="custom-control custom-switch col-md-4">
+          <input type="checkbox" class="custom-control-input" bind:checked={cumulative} on:change={update}
+                 id="cumulativeCountry">
+          <label class="custom-control-label" for="cumulativeCountry">Add previous day values(cumulative)</label>
+        </div>
       </div>
+    </div>
+    <div class="col-md-12">
+      <canvas id="country" class="w-100 mb-5" height=500></canvas>
     </div>
     <div class="col-md-12">
       <PercentageChange cases_time_series={cases_time_series} name={name}></PercentageChange>
