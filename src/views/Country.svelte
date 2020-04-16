@@ -176,7 +176,7 @@
       </div>
     {/if}
     <div class="text-center border border-light p-5 col-md-12">
-      <p class="h4 mb-4">Change parameters of graphs below</p>
+      <p class="h4 mb-4">Change parameters of next graphs</p>
       <div class="row">
         <div class="col-md-8">
           <div class="row">
