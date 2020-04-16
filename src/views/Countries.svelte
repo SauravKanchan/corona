@@ -33,6 +33,12 @@
     flag = flag.data
     let global = await window.api('https://corona.lmao.ninja/countries')
     countries = global.data
+    for(let count in countries){
+      if(Object.keys(oldNewMap).includes(countries[count].country)){
+        countries[count].country = oldNewMap[countries[count].country]
+      }
+    }
+    countries = countries
   })
 
   afterUpdate(() => {
@@ -51,11 +57,6 @@
   function country_link (e) {
     let link = document.getElementById('cl')
     let count = e.target.getAttribute('country');
-    console.log(oldNewMap, count)
-    if(Object.keys(oldNewMap).includes(count)){
-      count = oldNewMap[count]
-      console.log(count)
-    }
     link.href = "/country/"+count
     link.click()
   }
@@ -82,7 +83,6 @@
         <th scope="col">Critical</th>
         <th scope="col">Tests</th>
         <th scope="col">Tests/1M pop</th>
-        <th scope="col">ISO 2</th>
       </tr>
       </thead>
       <tbody>
@@ -101,7 +101,6 @@
           <td country={c.country}>{c.critical}</td>
           <td country={c.country}>{c.tests}</td>
           <td country={c.country}>{c.testsPerOneMillion}</td>
-          <th country={c.country} scope="row">{c.countryInfo.iso2}</th>
         </tr>
       {/each}
       </tbody>
