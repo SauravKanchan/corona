@@ -60,6 +60,7 @@
 <div class="container-fluid">
   {#if countries !== 0}
     <h2 class="h2 text-center mt-5 mb-3">Countries</h2>
+    <h4 class="h4 text-center text-muted">Click on country to see more detail</h4>
     <table class="table" id="countries">
       <thead class="purple darken-4 white-text">
       <tr>
