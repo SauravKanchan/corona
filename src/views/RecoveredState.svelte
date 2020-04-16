@@ -23,7 +23,7 @@
       data: {
         labels: labels,
         datasets: [{
-          label: 'No of Cases',
+          label: 'Percentage Recovered',
           data: data,
           backgroundColor: [
             '#2e7d32',
@@ -54,7 +54,7 @@
             },
             scaleLabel: {
               display: true,
-              labelString: 'No. of cases'
+              labelString: 'Percentage Recovered'
             }
           }],
           xAxes: [{
