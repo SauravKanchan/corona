@@ -2,6 +2,7 @@
   import { afterUpdate, onMount } from 'svelte'
   let selected_country
   let countries = []
+  let flag = []
 
   function fix_table () {
     let width = window.$(window).width()
@@ -18,6 +19,8 @@
 
 
   onMount(async () => {
+    flag = await window.api('https://pomber.github.io/covid19/countries.json')
+    flag = flag.data
     let global = await window.api('https://pomber.github.io/covid19/timeseries.json')
     let data = global.data
     for (let country in data) {
@@ -38,7 +41,7 @@
       if ( ! window.$.fn.DataTable.isDataTable( '#countries' ) ) {
         window.$('#countries').DataTable({
           pageLength: 50,
-          aaSorting: [[1, 'desc']]
+          aaSorting: [[2, 'desc']]
         })
         window.$('.dataTables_length').addClass('bs-select')
         fix_table()
@@ -60,6 +63,7 @@
     <table class="table" id="countries">
       <thead class="purple darken-4 white-text">
       <tr>
+        <th scope="col">Flag</th>
         <th scope="col">Country</th>
         <th scope="col">Confirmed</th>
         <th scope="col">Active</th>
@@ -70,6 +74,7 @@
       <tbody>
       {#each countries as c}
         <tr on:click={country_link} >
+          <td country={c.country}>{#if flag[c.country]}{flag[c.country]["flag"]}{/if}</td>
           <th country={c.country} scope="row">{c.country}</th>
           <td country={c.country}>{c.confirmed}</td>
           <td country={c.country}>{c.active}</td>
