@@ -117,7 +117,14 @@
     overview[3].number = data[data.length - 1].deaths
 
     cases_time_series = cases_time_series
-    let ctx = document.getElementById('country').getContext('2d')
+
+    document.getElementById('countryCanvasWrapper').innerHTML=""
+    let ctx_element = document.createElement("canvas");
+    ctx_element.setAttribute('class','w-100')
+    ctx_element.height = "400"
+    document.getElementById('countryCanvasWrapper').appendChild(ctx_element)
+    let ctx = ctx_element.getContext('2d')
+
     let chart = new Chart(ctx, {
       // The type of chart we want to create
       type: 'line',
@@ -193,8 +200,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-12">
-      <canvas id="country" class="w-100 mb-5" height=500></canvas>
+    <div class="col-md-12" id="countryCanvasWrapper">
     </div>
     <div class="col-md-12">
       <PercentageChange cases_time_series={cases_time_series} name={name}></PercentageChange>

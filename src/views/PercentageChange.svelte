@@ -25,7 +25,15 @@
         }
         data.push(percent)
       }
-      let ctx = document.getElementById('percentageChart')
+
+      document.getElementById('percentageWrapper').innerHTML=""
+      let ctx_element = document.createElement("canvas");
+      ctx_element.setAttribute('class','w-100')
+      ctx_element.height = "400"
+      document.getElementById('percentageWrapper').appendChild(ctx_element)
+      let ctx = ctx_element.getContext('2d')
+
+
       let stackedLine = new Chart(ctx, {
         // The type of chart we want to create
         type: 'line',
@@ -71,6 +79,4 @@
   })
 
 </script>
-{#if cases_time_series}
-  <canvas id="percentageChart" class="w-100" height="500"></canvas>
-{/if}
+<div id="percentageWrapper"></div>

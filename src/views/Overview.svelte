@@ -2,13 +2,18 @@
   export let overview;
   export let lastupdatedtime;
   export let title;
+  let flag
+  (async ()=>{
+    flag = await window.api('https://pomber.github.io/covid19/countries.json')
+    flag = flag.data
+  })()
 </script>
 {#if overview}
 <div class="row">
   <div class="col-md-12">
     <div class="row mb-3">
       <div class="col-md-12">
-        <h1 class="title h1 text-center">{title}</h1>
+        <h1 class="title h1 text-center">{#if flag}{#if flag[title]}{flag[title]["flag"]}{/if}{/if} {title}</h1>
         <h3 class="h6 text-muted text-center">{#if lastupdatedtime}Last Update at {lastupdatedtime}{:else} &nbsp; {/if}</h3>
       </div>
     </div>
