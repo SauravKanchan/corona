@@ -55,7 +55,7 @@
         number: total.active,
         title: 'Active',
         class: 'info',
-        delta: total.deltarecovered
+        delta: 0
       },
       {
         number: total.deaths,

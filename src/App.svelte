@@ -55,6 +55,6 @@
 <svelte:component this={$page.component} {...$page.props} />
 <footer class="page-footer font-small indigo mt-5">
 <div class="text-center py-3">Made with <i class="fas fa-heart"></i> by
-  <a href="https://saurav.tech/">Saurav Kanchan</a>, <a href="https://www.linkedin.com/in/akhil-kedare">Akhil Kedare</a> & <a href="https://www.linkedin.com/in/nikita-chorghe">Nikita Chorghe</a>
+  <a href="https://saurav.tech/" target="_blank">Saurav Kanchan</a>, <a href="https://www.linkedin.com/in/akhil-kedare" target="_blank">Akhil Kedare</a> & <a href="https://www.linkedin.com/in/nikita-chorghe" target="_blank">Nikita Chorghe</a>
   </div>
 </footer>
