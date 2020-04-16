@@ -67,7 +67,7 @@
             xAxes:[{
               ticks: {
                 autoSkip: true,
-                maxTicksLimit: 20
+                maxTicksLimit: 10
               },
               distribution: 'series'
             }]

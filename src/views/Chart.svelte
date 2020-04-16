@@ -217,7 +217,7 @@
           }],
           xAxes: [{   ticks: {
               autoSkip: true,
-              maxTicksLimit: 20
+              maxTicksLimit: 10
             },
             distribution: 'series'
           }]
@@ -245,7 +245,13 @@
   }
 
   function update () {
-    update_graph(state_daily, whitelisted_states, status, days, cumulative)
+      update_graph(state_daily, whitelisted_states, status, days, cumulative)
+  }
+
+  $: if (status) {
+    if(state_daily && days){
+      update_graph(state_daily, whitelisted_states, status, days, cumulative)
+    }
   }
 
 
@@ -267,24 +273,24 @@
 
       <p class="h5 mt-4">Select graph of</p>
       <div class="custom-control custom-radio">
-        <input type="radio" on:change={update} class="custom-control-input" id="confirmedId"
+        <input type="radio" class="custom-control-input" id="confirmedId"
                value="Confirmed" bind:group={status} checked>
         <label class="custom-control-label" for="confirmedId">Confirmed</label>
       </div>
       <div class="custom-control custom-radio">
-        <input type="radio" on:change={update} class="custom-control-input" id="RecoveredId"
+        <input type="radio" class="custom-control-input" id="RecoveredId"
                value="Recovered" bind:group={status}>
         <label class="custom-control-label" for="RecoveredId">Recovered</label>
       </div>
       <div class="custom-control custom-radio">
-        <input type="radio" on:change={update} class="custom-control-input" id="DeceasedId"
+        <input type="radio" class="custom-control-input" id="DeceasedId"
                value="Deceased" bind:group={status}>
         <label class="custom-control-label" for="DeceasedId">Death</label>
       </div>
       <div class="row mt-3">
         <label class="form-control-label col-md-2" for="DaysId">Days</label>
         <input type="range" id="DaysId" class="slider col-md-8" bind:value={days} max="{total_days}"
-               min="1" on:change={update}>
+               min="1">
         <p class="col-md-2 h5">{days}</p>
       </div>
       <div class="custom-control custom-switch row">
