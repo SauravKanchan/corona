@@ -6,12 +6,13 @@
 
       if (width <= 500) {
         window.$('#districtTable').addClass('table-responsive')
+        window.$('.dataTables_info').addClass('table-responsive')
       }else{
         window.$('#districtTable').removeClass('table-responsive')
+        window.$('.dataTables_info').removeClass('table-responsive')
       }
   }
   window.$(window).resize(fix_table)
-  setTimeout(fix_table,1)
 
   let district = []
   onMount(async () => {
@@ -32,11 +33,13 @@
   })
   afterUpdate(() => {
     if (district.length) {
+
       window.$('#districtTable').DataTable({
         pageLength: 25,
         aaSorting: [[2, 'desc']]
       })
       window.$('.dataTables_length').addClass('bs-select')
+      fix_table()
     }
   })
 

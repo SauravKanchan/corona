@@ -1,3 +1,9 @@
+<style>
+  body{
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+</style>
 <script>
   import router, { page } from './router'
   import axios from 'axios'
@@ -21,7 +27,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item">
         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>
@@ -39,6 +45,9 @@
       </li>
       <li class="nav-item">
         <a href="/faq" class="nav-link">FAQ</a>
+      </li>
+      <li class="nav-item">
+        <a href="https://github.com/SauravKanchan/corona" target="_blank" class="nav-link"><i class="fab fa-github"></i></a>
       </li>
     </ul>
   </div>

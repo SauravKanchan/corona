@@ -8,7 +8,6 @@
 
   afterUpdate(() => {
     let series = [{ dailyconfirmed: 0, date: '', totalconfirmed: 0 }].concat(cases_time_series)
-    series = series.slice(Math.max(series.length -80,0), series.length)
     if (series.length > 1) {
       let labels = []
       let data = [0]

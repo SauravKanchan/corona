@@ -8,12 +8,13 @@
 
     if (width <= 500) {
       window.$('#countries').addClass('table-responsive')
+      window.$('.dataTables_info').addClass('table-responsive')
     }else{
       window.$('#countries').removeClass('table-responsive')
+      window.$('.dataTables_info').removeClass('table-responsive')
     }
   }
   window.$(window).resize(fix_table)
-  setTimeout(fix_table,1)
 
 
   onMount(async () => {
@@ -40,6 +41,7 @@
           aaSorting: [[1, 'desc']]
         })
         window.$('.dataTables_length').addClass('bs-select')
+        fix_table()
       }
     }
   })
