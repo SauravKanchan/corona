@@ -11,7 +11,7 @@
   {#if news}
   <div class="row">
     {#each news as n}
-      <div class="col-md-3">
+      <div class="col-md-3 mt-5">
         <div class="card card-cascade">
 
           <!-- Card image -->

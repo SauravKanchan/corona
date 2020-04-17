@@ -2,20 +2,22 @@
   export let statewise
   const Chart = require('chart.js')
   import { afterUpdate } from 'svelte'
+  let local_statewise
 
   afterUpdate(async () => {
     let labels = []
     let data = []
-    statewise.sort((a,b)=>{
+    local_statewise = statewise.slice()
+    local_statewise.sort((a,b)=>{
       return (b.recovered/b.confirmed - a.recovered/a.confirmed)
     })
-    for(let s in statewise.slice(0,5)){
-      if (statewise[s].state === "Andaman and Nicobar Islands"){
+    for(let s in local_statewise.slice(0,5)){
+      if (local_statewise[s].state === "Andaman and Nicobar Islands"){
         labels.push("Andaman & N")
       }else{
-        labels.push(statewise[s].state)
+        labels.push(local_statewise[s].state)
       }
-      data.push(statewise[s].recovered*100/statewise[s].confirmed)
+      data.push(local_statewise[s].recovered*100/local_statewise[s].confirmed)
     }
     let ctx = document.getElementById('recovereChart').getContext('2d')
     let recovereChart = new Chart(ctx, {
@@ -68,6 +70,6 @@
     })
   })
 </script>
-{#if statewise}
+{#if local_statewise}
 <canvas id="recovereChart" class="w-100" height="500"></canvas>
 {/if}

@@ -5,7 +5,7 @@
 
   let state_local
   afterUpdate(async () => {
-      state_local = statewise
+      state_local = statewise.slice()
       state_local.sort((a, b) => {
         return b.deaths - a.deaths
       })
