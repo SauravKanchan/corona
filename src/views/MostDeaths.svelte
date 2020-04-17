@@ -15,8 +15,16 @@
         labels.push(state_local[s].state)
         data.push(state_local[s].deaths)
       }
-      let ctx = document.getElementById('mostDeath').getContext('2d')
-      let mostDeath = new Chart(ctx, {
+
+    if(!document.getElementById('mostDeathWrapper')){return }
+    document.getElementById('mostDeathWrapper').innerHTML=""
+    let ctx_element = document.createElement("canvas");
+    ctx_element.setAttribute('class','w-100')
+    ctx_element.height = "400"
+    document.getElementById('mostDeathWrapper').appendChild(ctx_element)
+    let ctx = ctx_element.getContext('2d')
+
+    let mostDeath = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: labels,
@@ -73,5 +81,5 @@
   })
 </script>
 {#if state_local}
-  <canvas id="mostDeath" class="w-100" height="500"></canvas>
+  <div id="mostDeathWrapper"></div>
 {/if}
