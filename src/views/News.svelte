@@ -2,11 +2,7 @@
   let news;
   (async () => {
     let res;
-    try{
-      res = await api.get('http://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=4119ac59db8e4fc89b2118424f8f3363');
-    }catch (e) {
-      res = await api.get('https://raw.githubusercontent.com/atapas/covid-19/3b03d46985af80d2d458ff5031ddae23b2beccd0/src/js/utils/top-headlines.json')
-    }
+    res = await api.get('https://raw.githubusercontent.com/SauravKanchan/corona/master/src/data/news.json');
     news = res.data.articles
   })()
 </script>
