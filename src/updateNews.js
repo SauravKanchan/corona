@@ -7,9 +7,7 @@ const exec = util.promisify(require('child_process').exec)
 
 async function gitPush () {
   try {
-    const { stdout, stderr } = await exec('git add -A && git commit -m "Update News" && git push')
-    console.log('stdout:', stdout)
-    console.log('stderr:', stderr)
+    await exec('git add -A && git commit -m "Update News" && git push')
   } catch (err) {
     console.error(err)
   }
@@ -18,9 +16,11 @@ async function gitPush () {
 (async () => {
   let res = await axios.get(`http://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=4119ac59db8e4fc89b2118424f8f3363`)
   if (res.status === 200) {
-    fs.writeFile('src/data/news.json', JSON.stringify(res.data), 'utf8', async(e) => {
-      console.log(e)
-      await gitPush()
+    fs.writeFile('src/data/news.json', JSON.stringify(res.data), 'utf8', async (e) => {
+      if (!e) {
+        await gitPush()
+        console.log('News Updated')
+      }
     })
   }
 
