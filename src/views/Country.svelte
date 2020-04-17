@@ -105,12 +105,12 @@
         graphData[0].data.push(data[element].confirmed)
         graphData[1].data.push(data[element].recovered)
         graphData[2].data.push(data[element].deaths)
+        graphData[3].data.push(graphData[0].data[graphData[0].data.length - 1] - graphData[1].data[graphData[1].data.length - 1] - graphData[2].data[graphData[2].data.length - 1])
       } else {
         graphData[0].data.push(data[element].confirmed - data[element - 1].confirmed)
         graphData[1].data.push(data[element].recovered - data[element - 1].recovered)
         graphData[2].data.push(data[element].deaths - data[element - 1].deaths)
       }
-      graphData[3].data.push(graphData[0].data[graphData[0].data.length - 1] - graphData[1].data[graphData[1].data.length - 1] - graphData[2].data[graphData[2].data.length - 1])
       cases_time_series.push({
         dailyconfirmed: data[element].confirmed - data[element - 1].confirmed,
         date: data[element].date,
@@ -132,6 +132,9 @@
     document.getElementById('countryCanvasWrapper').appendChild(ctx_element)
     let ctx = ctx_element.getContext('2d')
 
+    if (!cumulative) {
+      graphData = graphData.slice(0,3)
+    }
     let chart = new Chart(ctx, {
       // The type of chart we want to create
       type: 'line',
