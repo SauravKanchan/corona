@@ -63,7 +63,7 @@
           <div id="collapse{i}" class="collapse in p-3">
             {#if state_data[state.state]}
               {#each state_data[state.state] as sd}
-                <div class="row justify-content-between">
+                <div class="row">
                   <div class="col-4 text-center">{sd.district}</div>
                   <div class="col-4 text-center">{sd.confirmed}</div>
                 </div>
