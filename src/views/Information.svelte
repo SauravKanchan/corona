@@ -70,26 +70,7 @@
 
   function previous () {
     step -= 2
-    update_data()
-    // console.log(step)
-    // switch (step) {
-    //   case 1:{
-    //     area1 = []
-    //     for (let i in info_data) {
-    //       area1.push(info_data[i].info_type.name)
-    //     }
-    //     area1 = area1
-    //     title = "What are you looking for?"
-    //     contacts = []
-    //     break;
-    //   }
-    //   case 2:{
-    //     console.log(area1)
-    //     area1 = area1
-    //     contacts = []
-    //     break;
-    //   }
-    // }
+    update_data();
   }
 
 </script>
@@ -120,7 +101,9 @@
             <h5 class="card-title">{ele.name}</h5>
             <h6 class="card-subtitle mb-2">Source: {ele.source}</h6>
             <h6 class="card-subtitle mb-2">District: {ele.district}</h6>
-            <a href="{ele.source_link}" target="_blank" class="card-link">Source Link</a>
+            {#if ele.email_id_1}<h6 class="card-subtitle mb-2"><i class="far fa-envelope"></i> E-mail: <a href="mailto:{ele.email_id_1}" target="_top">{ele.email_id_1}</a></h6>{/if}
+            {#if ele.phone_1}<h6 class="card-subtitle mb-2"><i class="fas fa-phone"></i> Phone: <a href="tel:{ele.phone_1}" target="_top">{ele.phone_1}</a></h6>{/if}
+            <a href="{ele.source_link}" target="_blank" class="card-link">Source Link {#if ele.source}({ele.source}){/if}</a>
           </div>
         </div>
       </div>
