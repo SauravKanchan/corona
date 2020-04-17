@@ -91,6 +91,11 @@
         fill: false,
         borderColor: '#ff4444',
         data: [],
+      }, {
+        label: 'Active',
+        fill: false,
+        borderColor: '#33b5e5',
+        data: [],
       }]
     labels = []
     for (let element in data.slice(1)) {
@@ -105,6 +110,7 @@
         graphData[1].data.push(data[element].recovered - data[element - 1].recovered)
         graphData[2].data.push(data[element].deaths - data[element - 1].deaths)
       }
+      graphData[3].data.push(graphData[0].data[graphData[0].data.length - 1] - graphData[1].data[graphData[1].data.length - 1] - graphData[2].data[graphData[2].data.length - 1])
       cases_time_series.push({
         dailyconfirmed: data[element].confirmed - data[element - 1].confirmed,
         date: data[element].date,
@@ -119,10 +125,10 @@
 
     cases_time_series = cases_time_series
 
-    document.getElementById('countryCanvasWrapper').innerHTML=""
-    let ctx_element = document.createElement("canvas");
-    ctx_element.setAttribute('class','w-100')
-    ctx_element.height = "400"
+    document.getElementById('countryCanvasWrapper').innerHTML = ''
+    let ctx_element = document.createElement('canvas')
+    ctx_element.setAttribute('class', 'w-100')
+    ctx_element.height = '400'
     document.getElementById('countryCanvasWrapper').appendChild(ctx_element)
     let ctx = ctx_element.getContext('2d')
 
@@ -141,7 +147,7 @@
       options: {
         title: {
           display: true,
-          text: `Confirmed vs Recoverd vs Deaths in ${name}`,
+          text: `Confirmed vs Recoverd vs Deaths vs Active in ${name}`,
           fontSize: 20
         },
 
