@@ -7,7 +7,8 @@
   let title = 'What are you looking for?'
   let area1 = []
   let step = 1
-  let info_type_index;
+  let info_type_index
+  let loader = false;
 
   (async () => {
     info_data = await window.api('https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/info_types/')
@@ -48,6 +49,9 @@
             state = e.target.getAttribute('value')
           }
           let contacts_temp = []
+          area1 = []
+          contacts = []
+          loader = true
           let res = await window.api(`https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/states/${state}/`)
           for (let district in res.data) {
             let district_data = res.data[district].entries
@@ -60,9 +64,9 @@
           contacts = contacts_temp.filter((d) => {
             return d.infotype == info_type
           })
-          area1 = []
           title = `${info_type}: Contacts`
           step = 3
+          loader = false
         })()
       }
     }
@@ -70,7 +74,7 @@
 
   function previous () {
     step -= 2
-    update_data();
+    update_data()
   }
 
 </script>
@@ -101,12 +105,26 @@
             <h5 class="card-title">{ele.name}</h5>
             <h6 class="card-subtitle mb-2">Source: {ele.source}</h6>
             <h6 class="card-subtitle mb-2">District: {ele.district}</h6>
-            {#if ele.email_id_1}<h6 class="card-subtitle mb-2"><i class="far fa-envelope"></i> E-mail: <a href="mailto:{ele.email_id_1}" target="_top">{ele.email_id_1}</a></h6>{/if}
-            {#if ele.phone_1}<h6 class="card-subtitle mb-2"><i class="fas fa-phone"></i> Phone: <a href="tel:{ele.phone_1}" target="_top">{ele.phone_1}</a></h6>{/if}
-            <a href="{ele.source_link}" target="_blank" class="card-link">Source Link {#if ele.source}({ele.source}){/if}</a>
+            {#if ele.email_id_1}
+              <h6 class="card-subtitle mb-2"><i class="far fa-envelope"></i> E-mail: <a href="mailto:{ele.email_id_1}"
+                                                                                        target="_top">{ele.email_id_1}</a>
+              </h6>{/if}
+            {#if ele.phone_1}
+              <h6 class="card-subtitle mb-2"><i class="fas fa-phone"></i> Phone: <a href="tel:{ele.phone_1}"
+                                                                                    target="_top">{ele.phone_1}</a>
+              </h6>{/if}
+            <a href="{ele.source_link}" target="_blank" class="card-link">Source Link {#if ele.source}
+              ({ele.source}){/if}</a>
           </div>
         </div>
       </div>
     {/each}
   </div>
+  {#if loader}
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border text-secondary" role="status" style="width: 5rem; height: 5rem;">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  {/if}
 </div>
