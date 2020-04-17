@@ -20,8 +20,12 @@ async function gitPush () {
       if (!e) {
         await gitPush()
         console.log('News Updated')
+      } else {
+        console.log(e)
       }
     })
+  } else {
+    console.log(res)
   }
 
 })()
