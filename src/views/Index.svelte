@@ -81,7 +81,7 @@
       state_data[state] = state_data[state].sort(sortByProperty('confirmed'))
     }
     state_data = state_data
-    let global = await window.api('https://corona.lmao.ninja/all')
+    let global = await window.api('https://corona.lmao.ninja/v2/all')
     let data = global.data
     global_overview = [
       {

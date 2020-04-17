@@ -31,7 +31,7 @@
   onMount(async () => {
     flag = await window.api('https://pomber.github.io/covid19/countries.json')
     flag = flag.data
-    let global = await window.api('https://corona.lmao.ninja/countries')
+    let global = await window.api('https://corona.lmao.ninja/v2/countries')
     countries = global.data
     for(let count in countries){
       if(Object.keys(oldNewMap).includes(countries[count].country)){
