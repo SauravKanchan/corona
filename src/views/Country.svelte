@@ -73,6 +73,7 @@
   let labels
 
   function update_graph (data, cumulative) {
+    cases_time_series = [{ dailyconfirmed: 0, date: '', totalconfirmed: 0 }]
     let graphData = [
       {
         label: 'Confirmed',
