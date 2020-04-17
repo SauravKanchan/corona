@@ -8,7 +8,7 @@
   let area1 = []
   let step = 1
   let info_type_index
-  let loader = false;
+  let loader = true;
 
   (async () => {
     info_data = await window.api('https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/info_types/')
@@ -18,6 +18,7 @@
       area1.push(info_data[i].info_type.name)
     }
     area1 = area1
+    loader=false
   })()
 
   function update_data (e) {
@@ -92,7 +93,7 @@
   <div class="row mt-3" id="area1">
     {#each area1 as ele, i}
       <div class="col-md-3">
-        <div class="card p-4 w-100 mb-3 light-green lighten-2 text-center" data={i} value={ele}
+        <div class="card p-4 w-100 mb-3 cyan lighten-1 text-center font-weight-bold" data={i} value={ele}
              on:click={update_data}>{ele}</div>
       </div>
     {/each}
