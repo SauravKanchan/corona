@@ -18,10 +18,10 @@ async function gitPush () {
 (async () => {
   let res = await axios.get(`http://newsapi.org/v2/top-headlines?country=in&category=health&apiKey=4119ac59db8e4fc89b2118424f8f3363`)
   if (res.status === 200) {
-    await fs.writeFile('src/data/news.json', JSON.stringify(res.data), 'utf8', (e) => {
+    fs.writeFile('src/data/news.json', JSON.stringify(res.data), 'utf8', async(e) => {
       console.log(e)
+      await gitPush()
     })
-    await gitPush()
   }
 
 })()
