@@ -21,16 +21,23 @@
   }
 </style>
 <script>
+  import {onMount} from 'svelte';
+
   let faq = [{
-    ques: 'Are you official?',
+    question: 'Are you official?',
     answer: 'No'
   }, {
-    ques: 'What are your sources? How is the data gathered for this project ?',
+    question: 'What are your sources? How is the data gathered for this project ?',
     answer: 'Data is gathered from https://github.com/pomber/covid19 ,api.covid19india.org, https://corona.lmao.ninja/countries'
   },{
-    ques: "Why does your website have more positive count than MoH?",
+    question: "Why does your website have more positive count than MoH?",
     answer: "MoHFW updates the data at a scheduled time. However, API source updates them based on state press bulletins, official (CM, Health M) handles, PBI, Press Trust of India, ANI reports. These are generally more recent."
   }]
+
+  onMount(async ()=>{
+    let res = await window.api('https://covid19-news.herokuapp.com/api/covid19/faqs')
+    faq = faq.concat(res.data.data)
+  })
 </script>
 <div class="container-fluid mt-5">
   <h1 class="title h1 text-center">FAQ</h1>
@@ -44,7 +51,7 @@
           <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx" href="#collapseThree{i}"
              aria-expanded="false" aria-controls="collapseThree{i}">
             <h5 class="mb-0">
-              #{i+1} {f.ques} <i class="fas fa-angle-down rotate-icon"></i>
+              #{i+1} {f.question} <i class="fas fa-angle-down rotate-icon"></i>
             </h5>
           </a>
         </div>
