@@ -14,16 +14,12 @@
     info_data = await window.api('https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/info_types/')
     info_data = info_data.data
     info_type = info_data[0].info_type.name
-    for (let i in info_data) {
-      area1.push(info_data[i].info_type.name)
-    }
-    area1 = area1
-    loader=false
+	update_data()
   })()
 
   function update_data (e) {
     switch (step) {
-      case 0: {
+      case 1: {
         area1 = []
         for (let i in info_data) {
           area1.push(info_data[i].info_type.name)
@@ -31,20 +27,22 @@
         area1 = area1
         title = 'What are you looking for?'
         contacts = []
-        step = 1
+        step = 2
+    	loader=false
         break
       }
-      case 1: {
+      case 2: {
         if (e) {
           info_type_index = e.target.getAttribute('data')
         }
         area1 = info_data[info_type_index].states
+		contacts=[]
         info_type = info_data[info_type_index].info_type.name
         title = `${info_type}: Select your state`
-        step = 2
+        step = 3
         break
       }
-      case 2: {
+      case 3: {
         (async () => {
           if (e) {
             state = e.target.getAttribute('value')
@@ -66,7 +64,7 @@
             return d.infotype == info_type
           })
           title = `${info_type}: Contacts`
-          step = 3
+          step = 4
           loader = false
         })()
       }
@@ -75,6 +73,7 @@
 
   function previous () {
     step -= 2
+	console.log(step)
     update_data()
   }
 
@@ -85,7 +84,7 @@
       <h1 class="h1 title">{title}</h1>
     </div>
     <div class="col-md-2">
-      <button class="btn btn-primary w-100" disabled='{step!==2 && step!==3}' on:click={previous}><i
+      <button class="btn btn-primary w-100" disabled='{step!==4 && step!==3}' on:click={previous}><i
         class="fas fa-arrow-left"></i> Previous
       </button>
     </div>
