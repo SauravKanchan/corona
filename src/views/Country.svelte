@@ -71,10 +71,11 @@
   ]
   let global
   let labels
+  let labelsRate
 
   function update_graph (data, cumulative) {
     cases_time_series = [{ dailyconfirmed: 0, date: '', totalconfirmed: 0 }]
-    let graphData = [
+    let gd = [
       {
         label: 'Confirmed',
         fill: false,
@@ -97,20 +98,71 @@
         borderColor: '#33b5e5',
         data: [],
       }]
+    let gdT = [
+      {
+        label: 'Confirmed',
+        fill: false,
+        borderColor: '#ffbb33',
+        data: []
+      },
+      {
+        label: 'Recovered',
+        fill: false,
+        borderColor: '#00C851',
+        data: [],
+      }, {
+        label: 'Deaths',
+        fill: false,
+        borderColor: '#ff4444',
+        data: [],
+      }, {
+        label: 'Active',
+        fill: false,
+        borderColor: '#33b5e5',
+        data: [],
+      }]
+    let gdR = [
+      {
+        label: 'Confirmed Rate',
+        fill: false,
+        borderColor: '#ffbb33',
+        data: []
+      },
+      {
+        label: 'Recovered Rate',
+        fill: false,
+        borderColor: '#00C851',
+        data: [],
+      }, {
+        label: 'Deaths Rate',
+        fill: false,
+        borderColor: '#ff4444',
+        data: [],
+      }]
     labels = []
+    labelsRate = []
     for (let element in data.slice(1)) {
       element = parseInt(element) + 1
       labels.push(data[element].date)
       if (cumulative) {
-        graphData[0].data.push(data[element].confirmed)
-        graphData[1].data.push(data[element].recovered)
-        graphData[2].data.push(data[element].deaths)
-        graphData[3].data.push(graphData[0].data[graphData[0].data.length - 1] - graphData[1].data[graphData[1].data.length - 1] - graphData[2].data[graphData[2].data.length - 1])
-      } else {
-        graphData[0].data.push(data[element].confirmed - data[element - 1].confirmed)
-        graphData[1].data.push(data[element].recovered - data[element - 1].recovered)
-        graphData[2].data.push(data[element].deaths - data[element - 1].deaths)
+        gd[0].data.push(data[element].confirmed)
+        gd[1].data.push(data[element].recovered)
+        gd[2].data.push(data[element].deaths)
+        gd[3].data.push(gd[0].data[gd[0].data.length - 1] - gd[1].data[gd[1].data.length - 1] - gd[2].data[gd[2].data.length - 1])
       }
+
+
+      gdT[0].data.push(data[element].confirmed - data[element - 1].confirmed)
+      gdT[1].data.push(data[element].recovered - data[element - 1].recovered)
+      gdT[2].data.push(data[element].deaths - data[element - 1].deaths)
+
+      if (element > 1) {
+        gdR[0].data.push(gdT[0].data[gdT[0].data.length - 1] - gdT[0].data[gdT[0].data.length - 2])
+        gdR[1].data.push(gdT[1].data[gdT[1].data.length - 1] - gdT[1].data[gdT[1].data.length - 2])
+        gdR[2].data.push(gdT[2].data[gdT[2].data.length - 1] - gdT[2].data[gdT[2].data.length - 2])
+        labelsRate.push(data[element].date)
+      }
+
       cases_time_series.push({
         dailyconfirmed: data[element].confirmed - data[element - 1].confirmed,
         date: data[element].date,
@@ -118,12 +170,18 @@
       })
 
     }
+
     overview[0].number = data[data.length - 1].confirmed
     overview[1].number = data[data.length - 1].recovered
     overview[2].number = data[data.length - 1].confirmed - data[data.length - 1].recovered - data[data.length - 1].deaths
     overview[3].number = data[data.length - 1].deaths
 
     cases_time_series = cases_time_series
+
+    if (!cumulative) {
+      gd = gdT
+      gd = gd.slice(0, 3)
+    }
 
     document.getElementById('countryCanvasWrapper').innerHTML = ''
     let ctx_element = document.createElement('canvas')
@@ -132,33 +190,60 @@
     document.getElementById('countryCanvasWrapper').appendChild(ctx_element)
     let ctx = ctx_element.getContext('2d')
 
-    if (!cumulative) {
-      graphData = graphData.slice(0,3)
-    }
     let chart = new Chart(ctx, {
-      // The type of chart we want to create
       type: 'line',
-
-      // The data for our dataset
       data: {
-
-        datasets: graphData,
+        datasets: gd,
         labels: labels
       },
-
-      // Configuration options go here
       options: {
         title: {
           display: true,
           text: `Confirmed vs Recoverd vs Deaths vs Active in ${name}`,
           fontSize: 20
         },
-
         scales: {
           yAxes: [{
             scaleLabel: {
               display: true,
               labelString: 'No. of cases'
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 10
+            },
+          }]
+        }
+      }
+    })
+
+    console.log(gdR, labelsRate)
+    document.getElementById('countryRate').innerHTML = ''
+    let ctx_elementRate = document.createElement('canvas')
+    ctx_elementRate.setAttribute('class', 'w-100')
+    ctx_elementRate.height = '400'
+    document.getElementById('countryRate').appendChild(ctx_elementRate)
+    let ctxRate = ctx_elementRate.getContext('2d')
+
+    let chartRate = new Chart(ctxRate, {
+      type: 'line',
+      data: {
+        datasets: gdR,
+        labels: labelsRate
+      },
+      options: {
+        title: {
+          display: true,
+          text: `Growth Rate in ${name}`,
+          fontSize: 20
+        },
+        scales: {
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Rate of Change'
             }
           }],
           xAxes: [{
@@ -182,7 +267,6 @@
 
   function update () {
     update_graph(data.slice(data.length - days, data.length), cumulative)
-    console.log(days, cumulative)
   }
 </script>
 <div class="container-fluid mt-5">
@@ -211,6 +295,8 @@
       </div>
     </div>
     <div class="col-md-12" id="countryCanvasWrapper">
+    </div>
+    <div class="col-md-12" id="countryRate">
     </div>
     <div class="col-md-12">
       <PercentageChange cases_time_series={cases_time_series} name={name}></PercentageChange>

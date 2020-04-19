@@ -18,7 +18,7 @@ async function gitPush () {
   if (res.status === 200) {
     fs.writeFile('src/data/news.json', JSON.stringify(res.data), 'utf8', async (e) => {
       if (!e) {
-        await gitPush()
+        // await gitPush()
         console.log('News Updated')
       } else {
         console.log(e)
