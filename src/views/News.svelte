@@ -2,7 +2,7 @@
   let news;
   (async () => {
     let res;
-    res = await api.get('https://raw.githubusercontent.com/SauravKanchan/corona/master/src/data/news.json');
+    res = await api.get('https://saurav.tech/NewsAPI/top-headlines/category/health/in.json');
     news = res.data.articles
   })()
 </script>
