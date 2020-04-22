@@ -28,7 +28,8 @@
     }
   }
 
-  window.$(window).resize(fix_table)
+  window.$(window).resize(fix_table);
+
 
   onMount(async () => {
     flag = await window.api('https://pomber.github.io/covid19/countries.json')

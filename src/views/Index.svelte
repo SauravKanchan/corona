@@ -113,6 +113,10 @@
     let date = new Date(data.updated)
     global_update_date = date.toLocaleString().replace(',', '')
 
+    // cache countries
+    await window.api('https://corona.lmao.ninja/v2/countries');
+
+
   })()
 
 </script>
