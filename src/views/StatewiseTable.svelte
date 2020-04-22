@@ -1,11 +1,6 @@
 <script>
   export let statewise
   export let state_data
-  import {afterUpdate} from 'svelte';
-
-  afterUpdate(()=>{
-    console.log("state_data", state_data)
-  })
 </script>
 <style>
   tr.hide-table-padding td {

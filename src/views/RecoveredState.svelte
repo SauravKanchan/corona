@@ -11,7 +11,7 @@
     local_statewise.sort((a,b)=>{
       return (b.recovered/b.confirmed - a.recovered/a.confirmed)
     })
-    for(let s in local_statewise.slice(0,5)){
+    for(let s in local_statewise.slice(0,6)){
       if (local_statewise[s].state === "Andaman and Nicobar Islands"){
         labels.push("Andaman & N")
       }else{

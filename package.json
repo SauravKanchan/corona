@@ -37,6 +37,7 @@
     "chart.js": "^2.9.3",
     "elliptic": "^6.5.2",
     "eslint-plugin-svelte3": "^1.0.0",
+    "jsonp": "^0.2.1",
     "shamirs-secret-sharing": "^1.0.1",
     "web3-utils": "^1.2.6"
   }

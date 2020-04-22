@@ -219,7 +219,6 @@
       }
     })
 
-    console.log(gdR, labelsRate)
     document.getElementById('countryRate').innerHTML = ''
     let ctx_elementRate = document.createElement('canvas')
     ctx_elementRate.setAttribute('class', 'w-100')

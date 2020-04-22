@@ -11,7 +11,7 @@
   let loader = true;
 
   (async () => {
-    info_data = await window.api('https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/info_types/')
+    info_data = await window.api('https://cors-anywhere.herokuapp.com/https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/info_types/')
     info_data = info_data.data
     info_type = info_data[0].info_type.name
 	update_data()
@@ -51,7 +51,7 @@
           area1 = []
           contacts = []
           loader = true
-          let res = await window.api(`https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/states/${state}/`)
+          let res = await window.api(`https://cors-anywhere.herokuapp.com/https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/states/${state}/`)
           for (let district in res.data) {
             let district_data = res.data[district].entries
             for (let entry in district_data) {
