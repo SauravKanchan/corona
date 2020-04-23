@@ -15,18 +15,10 @@
   })
 
   function toggle(){
-
     window.$('#sidebar').toggleClass('activeSideBar');
     window.$("#sidebarCollapse").toggleClass('activeSideBar');
-
   }
 </script>
-<style>
-  body{
-    overflow-x: hidden;
-    overflow-y: hidden;
-  }
-</style>
 
 <div class="wrapper">
   <!-- Sidebar Holder -->
@@ -54,8 +46,11 @@
       <li>
         <a class="link" href="/faq" >FAQ</a>
       </li>
+      <li>
+        <div class="p-2">National Helpline Number:</div>
+        <a class="link" href="tel:+911123978046">+91-11-23978046</a>
+      </li>
     </ul>
-
     <ul class="list-unstyled CTAs">
       <li>
         <a href="https://github.com/SauravKanchan/corona" target="_blank" class="download"><i class="fab fa-github"></i> Github</a>
