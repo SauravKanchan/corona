@@ -62,16 +62,14 @@
   <div id="content">
 
     <nav class="navbar cyan darken-1">
-      <div class="container-fluid">
-        <button type="button" id="sidebarCollapse" class="navbar-btn" on:click={toggle} >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <h1 class="h1 title text-white">{title}</h1>
-        <p></p>
-      </div>
+            <button type="button" id="sidebarCollapse" class="navbar-btn" on:click={toggle} style="position: fixed; z-index: 99">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+        <h1 class="h1 title text-white text-center ml-auto mr-auto">{title}</h1>
     </nav>
+
     <svelte:component this={$page.component} {...$page.props} bind:title />
     <footer class="page-footer font-small mdb-color lighten-2 mt-5">
       <div class="text-center py-3">Made with <i class="fas fa-heart"></i> by
