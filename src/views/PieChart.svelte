@@ -1,6 +1,7 @@
 <script>
   const chart = require('chart.js')
   import { afterUpdate } from 'svelte'
+
   export let pieData
   let options
 
@@ -8,7 +9,7 @@
     let data = {
       datasets: [{
         data: [pieData.active, pieData.recovered, pieData.deaths],
-        backgroundColor:['#ffbb33','#558b2f','#f44336']
+        backgroundColor: ['#ffbb33', '#558b2f', '#f44336']
       }],
       labels: [
         'Active',
@@ -20,14 +21,20 @@
     let myPieChart = new Chart(ctx, {
       type: 'doughnut',
       data: data,
-      options: {title: {
+      options: {
+        title: {
           display: true,
           text: 'Distribution of cases',
           fontSize: 25
-        }}
+        }
+      }
     })
   })
 </script>
-{#if pieData}
-<canvas id="pieChart" class="w-100" height="500"></canvas>
-{/if}
+<div style="height: 100% !important;">
+  {#if pieData}
+
+    <canvas id="pieChart" class="w-100" height="500"></canvas>
+  {/if}
+
+</div>
