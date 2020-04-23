@@ -18,16 +18,25 @@
     window.$('#sidebar').toggleClass('activeSideBar');
     window.$("#sidebarCollapse").toggleClass('activeSideBar');
   }
+
+  function close () {
+
+    let width = window.$(window).width()
+    if (width <= 500) {
+      window.$('#sidebar').removeClass('activeSideBar')
+      window.$('#sidebarCollapse').removeClass('activeSideBar')
+    }
+  }
 </script>
 
 <div class="wrapper">
   <!-- Sidebar Holder -->
   <nav id="sidebar">
     <div class="sidebar-header">
-      <h3>COVID-19</h3>
+      <h3 class="text-center">COVID-19</h3>
     </div>
 
-    <ul class="list-unstyled components">
+    <ul class="list-unstyled components" on:click={close}>
       <li>
         <a class="link" href="/">Home <span class="sr-only">(current)</span></a>
       </li>

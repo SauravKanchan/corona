@@ -9,7 +9,7 @@
   })()
 </script>
 
-<div class="container-fluid">
+<div class="container-fluid mt-5">
   {#if news}
   <div class="row">
     {#each news as n}
