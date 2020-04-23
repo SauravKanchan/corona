@@ -17,20 +17,6 @@
     'USA': 'US'
   }
 
-  function fix_table () {
-    let width = window.$(window).width()
-
-    if (width <= 500) {
-      window.$('#countries').addClass('table-responsive')
-      window.$('.dataTables_info').addClass('table-responsive')
-    } else {
-      window.$('#countries').removeClass('table-responsive')
-      window.$('.dataTables_info').removeClass('table-responsive')
-    }
-  }
-
-  window.$(window).resize(fix_table);
-
 
   onMount(async () => {
     flag = await window.api('https://pomber.github.io/covid19/countries.json')
@@ -54,7 +40,7 @@
           aaSorting: [[2, 'desc']]
         })
         window.$('.dataTables_length').addClass('bs-select')
-        fix_table()
+        window.$('.dataTables_info').addClass('table-responsive')
       }
     }
   })
@@ -76,10 +62,10 @@
   </div>
 {:else}
   <a href={selected_country} class="d-none" id="cl"></a>
-  <div class="container-fluid">
+  <div class="container-fluid" >
     {#if countries !== 0}
       <h4 class="h4 text-center text-muted mt-5">Click on country to see more detail</h4>
-      <table class="table" id="countries">
+      <table class="table table-responsive" id="countries">
         <thead class="mdb-color darken-3 white-text">
         <tr>
           <th scope="col">Flag</th>
