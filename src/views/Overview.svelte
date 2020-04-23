@@ -29,7 +29,7 @@
         <div
           class="text-center text-{ o.class }">
           <h2 class="h1 mb-0 text-responsive">{ o.number }</h2>
-          <p class="h6 text-small">{#if o.delta}[+ {o.delta }]{/if}</p>
+          <p class="h6 text-small text-{o.class}">{#if o.delta}[+ {o.delta }]{/if}</p>
           <p><strong>{ o.title }</strong></p>
         </div>
       </div>

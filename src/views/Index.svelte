@@ -10,7 +10,7 @@
   import Country from './Country.svelte'
   import PieChart from './PieChart.svelte'
   export let title
-  title="COVID-19 Overview"
+  title="Overview"
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
