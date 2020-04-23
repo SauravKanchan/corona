@@ -21,7 +21,8 @@
   }
 </style>
 <script>
-
+  export let title
+  title = "FAQ"
   let faq = [{
     'question': 'Are you official?',
     'answer': 'No'
@@ -104,7 +105,6 @@
 
 </script>
 <div class="container-fluid mt-5">
-  <h1 class="title h1 text-center">FAQ</h1>
   <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
     {#each faq as f,i}
     <!-- Accordion card -->

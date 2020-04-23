@@ -1,6 +1,7 @@
 <script>
   import { afterUpdate, onMount } from 'svelte'
-
+  export let title;
+  title="Countries"
   let selected_country
   let countries = []
   let flag = []
@@ -77,10 +78,9 @@
   <a href={selected_country} class="d-none" id="cl"></a>
   <div class="container-fluid">
     {#if countries !== 0}
-      <h2 class="h2 text-center mt-5 mb-3">Countries</h2>
-      <h4 class="h4 text-center text-muted">Click on country to see more detail</h4>
+      <h4 class="h4 text-center text-muted mt-5">Click on country to see more detail</h4>
       <table class="table" id="countries">
-        <thead class="purple darken-4 white-text">
+        <thead class="mdb-color darken-3 white-text">
         <tr>
           <th scope="col">Flag</th>
           <th scope="col">Country</th>

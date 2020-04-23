@@ -26,7 +26,7 @@
     "webpack-dev-server": "^3.3.1"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack && cp _redirects dist/ && cp public/favicon_io dist -r",
+    "build": "cross-env NODE_ENV=production webpack && cp _redirects dist/ && cp public/favicon_io dist -r && cp public/css dist -r",
     "dev": "webpack-dev-server --content-base public --history-api-fallback",
     "lint": "eslint . --ext .js,.svelte",
     "fix": "eslint . --ext .js,.svelte --fix"

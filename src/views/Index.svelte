@@ -9,7 +9,8 @@
   import RecoveredState from './RecoveredState.svelte'
   import Country from './Country.svelte'
   import PieChart from './PieChart.svelte'
-
+  export let title
+  title="COVID-19 Overview"
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
@@ -122,7 +123,6 @@
 </script>
 
 <div class="container-fluid">
-  <h1 class="h1 title text-center mt-5 col-md-12">COVID-19 Overview</h1>
   <div class="row mt-5">
     <div class="col-md-12">
       <div class="row">
@@ -139,11 +139,21 @@
         <div class="col-md-6 col-xs-12 mt-3">
           <StateWiseTable statewise={statewise} state_data={state_data}/>
         </div>
-        <div class="col-md-6 col-xs-12 mt-3 table-responsive">
-          <MostAffected statewise={statewise}></MostAffected>
-          <RecoveredState statewise={statewise}></RecoveredState>
-          <MostDeaths statewise={statewise}></MostDeaths>
-          <PieChart pieData={total}></PieChart>
+        <div class="col-md-6 col-xs-12 mt-3">
+          <div class="row">
+            <div class="col-md-12">
+              <MostAffected statewise={statewise}></MostAffected>
+            </div>
+            <div class="col-md-12">
+              <RecoveredState statewise={statewise}></RecoveredState>
+            </div>
+            <div class="col-md-12">
+              <MostDeaths statewise={statewise}></MostDeaths>
+            </div>
+            <div class="col-md-12">
+              <PieChart pieData={total}></PieChart>
+            </div>
+          </div>
         </div>
       </div>
     </div>

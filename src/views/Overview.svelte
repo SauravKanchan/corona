@@ -10,7 +10,7 @@
 </script>
 <style>
   .text-responsive {
-    font-size: calc(90% + 1vw + 1vh);
+    font-size: calc(40% + 1vw + 1vh);
   }
 </style>
 {#if overview}

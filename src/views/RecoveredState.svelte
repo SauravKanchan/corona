@@ -11,7 +11,7 @@
     local_statewise.sort((a,b)=>{
       return (b.recovered/b.confirmed - a.recovered/a.confirmed)
     })
-    for(let s in local_statewise.slice(0,6)){
+    for(let s in local_statewise.slice(0,10)){
       if (local_statewise[s].state === "Andaman and Nicobar Islands"){
         labels.push("Andaman & N")
       }else{
@@ -29,11 +29,16 @@
           data: data,
           backgroundColor: [
             '#2e7d32',
+            '#2e7d32',
             '#558b2f',
             '#43a047',
+            '#689f38',
+            '#7cb342',
             '#8bc34a',
             '#aed581',
-            '#c5e1a5'
+            '#c5e1a5',
+            '#dcedc8',
+            '#f1f8e9'
           ],
         }]
       },
@@ -71,5 +76,7 @@
   })
 </script>
 {#if local_statewise}
+<div style="height: 100% !important;">
 <canvas id="recovereChart" class="w-100" height="500"></canvas>
+</div>
 {/if}

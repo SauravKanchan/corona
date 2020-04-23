@@ -1,4 +1,6 @@
 <script>
+  export let title;
+  title = "News";
   let news;
   (async () => {
     let res;
@@ -7,13 +9,12 @@
   })()
 </script>
 
-<div class="container-fluid mt-5">
+<div class="container-fluid">
   {#if news}
   <div class="row">
     {#each news as n}
-      <div class="col-md-3 mt-5">
+      <div class="col-md-3 mb-5">
         <div class="card card-cascade">
-
           <!-- Card image -->
           <div class="view view-cascade overlay">
             <img class="card-img-top" src="{n.urlToImage}" alt="Card image cap">
@@ -21,10 +22,8 @@
               <div class="mask rgba-white-slight"></div>
             </a>
           </div>
-
           <!-- Card content -->
           <div class="card-body card-body-cascade text-center">
-
             <!-- Title -->
             <h4 class="card-title"><strong>{n.title}</strong></h4>
             <!-- Subtitle -->

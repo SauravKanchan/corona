@@ -4,11 +4,13 @@
   let selected = 0
   let info_type
   let contacts = []
-  let title = 'What are you looking for?'
+  let titleInormation = 'What are you looking for?'
   let area1 = []
   let step = 1
   let info_type_index
   let loader = true;
+  export let title;
+  title = "Information";
 
   (async () => {
     info_data = await window.api('https://cors-anywhere.herokuapp.com/https://covid-fyi-backend-2.herokuapp.com/api/v1/covidfyi/info_types/')
@@ -25,7 +27,7 @@
           area1.push(info_data[i].info_type.name)
         }
         area1 = area1
-        title = 'What are you looking for?'
+        titleInormation = 'What are you looking for?'
         contacts = []
         step = 2
     	loader=false
@@ -38,7 +40,7 @@
         area1 = info_data[info_type_index].states
 		contacts=[]
         info_type = info_data[info_type_index].info_type.name
-        title = `${info_type}: Select your state`
+        titleInormation = `${info_type}: Select your state`
         step = 3
         break
       }
@@ -63,7 +65,7 @@
           contacts = contacts_temp.filter((d) => {
             return d.infotype == info_type
           })
-          title = `${info_type}: Contacts`
+          titleInormation = `${info_type}: Contacts`
           step = 4
           loader = false
         })()
@@ -81,7 +83,7 @@
 <div class="container-fluid mt-5">
   <div class="row">
     <div class="col-md-10">
-      <h1 class="h1 title">{title}</h1>
+      <h1 class="h1 titleInormation">{titleInormation}</h1>
     </div>
     <div class="col-md-2">
       <button class="btn btn-primary w-100" disabled='{step!==4 && step!==3}' on:click={previous}><i
@@ -102,15 +104,15 @@
       <div class="col-sm-3 mb-5">
         <div class="card" style="width: 18rem;">
           <div class="card-body justify-content-center">
-            <h5 class="card-title">{ele.name}</h5>
-            <h6 class="card-subtitle mb-2">Source: {ele.source}</h6>
-            <h6 class="card-subtitle mb-2">District: {ele.district}</h6>
+            <h5 class="card-titleInormation">{ele.name}</h5>
+            <h6 class="card-subtitleInormation mb-2">Source: {ele.source}</h6>
+            <h6 class="card-subtitleInormation mb-2">District: {ele.district}</h6>
             {#if ele.email_id_1}
-              <h6 class="card-subtitle mb-2"><i class="far fa-envelope"></i> E-mail: <a href="mailto:{ele.email_id_1}"
+              <h6 class="card-subtitleInormation mb-2"><i class="far fa-envelope"></i> E-mail: <a href="mailto:{ele.email_id_1}"
                                                                                         target="_top">{ele.email_id_1}</a>
               </h6>{/if}
             {#if ele.phone_1}
-              <h6 class="card-subtitle mb-2"><i class="fas fa-phone"></i> Phone: <a href="tel:{ele.phone_1}"
+              <h6 class="card-subtitleInormation mb-2"><i class="fas fa-phone"></i> Phone: <a href="tel:{ele.phone_1}"
                                                                                     target="_top">{ele.phone_1}</a>
               </h6>{/if}
             <a href="{ele.source_link}" target="_blank" class="card-link">Source Link {#if ele.source}

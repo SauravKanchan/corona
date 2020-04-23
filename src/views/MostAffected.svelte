@@ -67,6 +67,8 @@
     })
   })
 </script>
+<div class="wrapper" style="height: 100% !important;">
 {#if statewise}
 <canvas id="mostAfffectedChart" class="w-100" height="500"></canvas>
 {/if}
+</div>

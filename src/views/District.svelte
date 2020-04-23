@@ -1,5 +1,6 @@
 <script>
   import { afterUpdate, onMount } from 'svelte'
+  export let title
 
   function fix_table () {
     let width = window.$(window).width()
@@ -29,6 +30,7 @@
 
     district = district
     fix_table()
+    title = `All ${district.length} District`
 
   })
   afterUpdate(() => {
@@ -47,9 +49,8 @@
 </script>
 <div class="container-fluid mt-5">
   {#if district.length }
-    <h2 class="text-center title h2">All {district.length} Districts</h2>
     <table id="districtTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-      <thead class="purple darken-2 white-text">
+      <thead class="mdb-color darken-3 white-text">
       <tr>
         <th class="th-sm">District
         </th>
