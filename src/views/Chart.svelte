@@ -78,7 +78,7 @@
   let total_days
   let cumulative = true
 
-  let whitelisted_states = ['mh', 'dl', 'kl', 'tn', 'rj']
+  let whitelisted_states = ['mh', 'gj','dl', 'tn', 'mp', 'rj']
   let state_daily
   let remaining_states = []
   let colors = {}
@@ -193,7 +193,7 @@
     document.getElementById('stateChartWrapper').innerHTML=""
     let ctx_element = document.createElement("canvas");
     ctx_element.setAttribute('class','w-100')
-    ctx_element.height = "400"
+    ctx_element.height = "600"
     document.getElementById('stateChartWrapper').appendChild(ctx_element)
     let ctx = ctx_element.getContext('2d')
     let chart = new Chart(ctx, {
