@@ -10,6 +10,7 @@
 </script>
 <a href="/state/" class="d-none" bind:this={linkDom}></a>
 <h2 class="h2 text-center">State and District Wise</h2>
+<h5 class="h5 text-center text-muted">Click on state to see in detail</h5>
 <div class="table-responsive">
   <table class="table">
     <thead class="mdb-color darken-3 white-text">
