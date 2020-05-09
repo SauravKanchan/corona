@@ -14,23 +14,11 @@
 
   let total = { lastupdatedtime: '-' }
   let statewise = []
-  let state_data = []
   let global_overview = []
   let global_update_date = ''
   let countries = []
-  let cases_time_series = []
+  let cases_time_series = [];
 
-  function sortByProperty (property) {
-    return function (a, b) {
-      if (a[property] > b[property]) {
-        return -1
-      } else if (a[property] < b[property]) {
-        return 1
-      }
-
-      return 0
-    }
-  }
 
   (async () => {
     let res = await window.api.get('https://api.covid19india.org/data.json')
@@ -65,23 +53,6 @@
       }
     ]
 
-    let state_res
-    try {
-      state_res = await window.api.get('https://api.covid19india.org/state_district_wise.json')
-    } catch (e) {
-      state_res = await window.api.get('https://cors-anywhere.herokuapp.com/https://api.covid19india.org/state_district_wise.json')
-    }
-    let state_raw_data = state_res.data
-    for (let state in state_raw_data) {
-      state_data[state] = []
-      for (let district in state_raw_data[state].districtData) {
-        let dist = state_raw_data[state].districtData[district]
-        dist.district = district
-        state_data[state].push(state_raw_data[state].districtData[district])
-      }
-      state_data[state] = state_data[state].sort(sortByProperty('confirmed'))
-    }
-    state_data = state_data
     let global = await window.api('https://corona.lmao.ninja/v2/all')
     let data = global.data
     global_overview = [
@@ -137,7 +108,7 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-6 col-xs-12 mt-3">
-          <StateWiseTable statewise={statewise} state_data={state_data}/>
+          <StateWiseTable statewise={statewise}/>
         </div>
         <div class="col-md-6 col-xs-12 mt-3">
           <div class="row">

@@ -42,11 +42,16 @@ router('/country/:name', ctx =>
   )
 )
 
+router('/state/:name', ctx =>
+  import(/* webpackChunkName: "hello" */ './views/State.svelte').then(module =>
+    page.set({ component: module.default, props: ctx.params })
+  )
+)
+
 router('/faq', () =>
   import(/* webpackChunkName: "index" */ './views/FAQ.svelte').then(module =>
     page.set({ component: module.default })
   )
 )
-
 
 export default router
