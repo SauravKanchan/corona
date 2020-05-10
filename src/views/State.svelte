@@ -7,7 +7,9 @@
   let zones = {}
   let state_res
   let lastUpdateTime
-
+  let red = 0
+  let orange = 0
+  let green = 0
   let overview = []
 
   function sortByProperty (property) {
@@ -67,44 +69,64 @@
     let res = await window.api('https://api.covid19india.org/zones.json')
     let data = res.data.zones
     data.map(d => {
-      zones[d.district] = d.zone === 'Red' ? 'red' : d.zone === 'Green' ? 'green' : 'orange'
+      (d.zone === 'Red') ? red++ : (d.zone === 'Orange') ? orange++ : (d.zone === 'Green') ? green++ : null
+      zones[d.district] = d.zone
     })
     state_data = state_data
   })()
 
-
 </script>
 <div class="container-fluid mt-5">
-  <Overview title={name} overview={overview} lastupdatedtime={lastUpdateTime} />
-  <div col="row">
-    <div class="col">
-      <table class="table table-striped table-responsive">
-        <thead class="mdb-color darken-3 white-text">
-        <tr>
-          <th scope="col">District</th>
-          <th scope="col">Confirmed</th>
-          <th scope="col">Active</th>
-          <th scope="col">Recovered</th>
-          <th scope="col">Deaths</th>
-          <th scope="col">Zone</th>
-        </tr>
-        </thead>
-        <tbody>
-        {#each state_data as district}
-          <tr>
-            <th>{district.district}</th>
-            <td>{district.confirmed}{#if district.delta.confirmed}
-              <b class="text-danger"> [+{district.delta.confirmed}]</b>{/if}</td>
-            <td>{district.active}</td>
-            <td>{district.recovered}{#if district.delta.recovered}
-              <b class="text-success"> [+{district.delta.recovered}]</b>{/if}</td>
-            <td>{district.deceased}{#if district.delta.deceased}
-              <b class="text-warning"> [+{district.delta.deceased}]</b>{/if}</td>
-            <td class="{zones[district.district]} text-white text-center h5">{zones[district.district]}</td>
-          </tr>
-        {/each}
-        </tbody>
-      </table>
+  <Overview title={name} overview={overview} lastupdatedtime={lastUpdateTime}/>
+  <div class="h1 text-center mt-3 mb-3">Zones overview</div>
+  <div class="row mb-3">
+    <div class="col text-center">
+      <span class="total badge badge-danger p-5">
+        <h4 class="h4">{red}</h4>
+        {#if red}<h4 class="h4">{Math.round(red*10000/(red+orange+green))/100}</h4>{/if}
+      </span>
     </div>
+    <div class="col text-center">
+      <span class="total badge orange p-5">
+        <h4 class="h4">{orange}</h4>
+        {#if orange}<h4 class="h4">{Math.round(orange*10000/(red+orange+green))/100}</h4>{/if}
+      </span>
+    </div>
+    <div class="col text-center">
+      <span class="total badge badge-success p-5">
+        <h4 class="h4">{green}</h4>
+        {#if green}<h4 class="h4">{Math.round(green*10000/(red+orange+green))/100}</h4>{/if}
+      </span>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="mdb-color darken-3 white-text">
+      <tr>
+        <th scope="col">Zone</th>
+        <th scope="col">District</th>
+        <th scope="col">Confirmed</th>
+        <th scope="col">Active</th>
+        <th scope="col">Recovered</th>
+        <th scope="col">Deaths</th>
+      </tr>
+      </thead>
+      <tbody>
+      {#each state_data as district}
+        <tr>
+          <th
+            class="{zones[district.district]?zones[district.district].toLowerCase():''} text-white text-center h5">{zones[district.district]}</th>
+          <td>{district.district}</td>
+          <td>{district.confirmed}{#if district.delta.confirmed}
+            <b class="text-danger"> [+{district.delta.confirmed}]</b>{/if}</td>
+          <td>{district.active}</td>
+          <td>{district.recovered}{#if district.delta.recovered}
+            <b class="text-success"> [+{district.delta.recovered}]</b>{/if}</td>
+          <td>{district.deceased}{#if district.delta.deceased}
+            <b class="text-warning"> [+{district.delta.deceased}]</b>{/if}</td>
+        </tr>
+      {/each}
+      </tbody>
+    </table>
   </div>
 </div>
