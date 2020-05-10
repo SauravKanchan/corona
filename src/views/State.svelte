@@ -58,7 +58,21 @@
     let state_raw_data = state_res.data[name]
     let res = await window.api('https://api.covid19india.org/zones.json')
     let data = res.data.zones.filter((d) => d.state === name)
+    data.map((d) => {
+      if (!state_raw_data.districtData[d.district]) {
+        state_raw_data.districtData[d.district] = {
+          'notes': '',
+          'active': 0,
+          'confirmed': 0,
+          'deceased': 0,
+          'recovered': 0,
+          'delta': { 'confirmed': 0, 'deceased': 0, 'recovered': 0 },
+          'district': d.district,
+          'zone': d.zone
+        }
 
+      }
+    })
     for (let district in state_raw_data.districtData) {
       let dist = state_raw_data.districtData[district]
       dist.district = district
@@ -68,7 +82,7 @@
     }
     state_data = state_data.sort(sortByProperty('confirmed'))
     state_data = state_data
-    console.log(state_data[0])
+    // console.log(JSON.stringify(state_data[0]))
   })()
 
 </script>
