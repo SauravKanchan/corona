@@ -1,10 +1,10 @@
 <script>
   import Overview from './Overview.svelte'
+
   export let title
   export let name
-  title = name;
+  title = name
   let state_data = []
-  let zones = {}
   let state_res
   let lastUpdateTime
   let red = 0
@@ -54,25 +54,21 @@
         delta: statewise.deltadeaths
       }
     ]
-    try {
-      state_res = await window.api.get('https://api.covid19india.org/state_district_wise.json')
-    } catch (e) {
-      state_res = await window.api.get('https://cors-anywhere.herokuapp.com/https://api.covid19india.org/state_district_wise.json')
-    }
+    state_res = await window.api.get('https://api.covid19india.org/state_district_wise.json')
     let state_raw_data = state_res.data[name]
+    let res = await window.api('https://api.covid19india.org/zones.json')
+    let data = res.data.zones.filter((d) => d.state === name)
+
     for (let district in state_raw_data.districtData) {
       let dist = state_raw_data.districtData[district]
       dist.district = district
+      dist.zone = data.filter((d) => d.district === district)[0] ? data.filter((d) => d.district === district)[0].zone : 'white';
+      (dist.zone === 'Red') ? red++ : (dist.zone === 'Orange') ? orange++ : (dist.zone === 'Green') ? green++ : null
       state_data.push(state_raw_data.districtData[district])
     }
     state_data = state_data.sort(sortByProperty('confirmed'))
-    let res = await window.api('https://api.covid19india.org/zones.json')
-    let data = res.data.zones.filter((d)=>d.state===name)
-    data.map(d => {
-      (d.zone === 'Red') ? red++ : (d.zone === 'Orange') ? orange++ : (d.zone === 'Green') ? green++ : null
-      zones[d.district] = d.zone
-    })
     state_data = state_data
+    console.log(state_data[0])
   })()
 
 </script>
@@ -115,7 +111,7 @@
       {#each state_data as district}
         <tr>
           <th
-            class="{zones[district.district]?zones[district.district].toLowerCase():''} text-white text-center h5">{zones[district.district]}</th>
+            class="{district.zone?district.zone.toLowerCase():''} text-white text-center h5">{district.zone}</th>
           <td>{district.district}</td>
           <td>{district.confirmed}{#if district.delta.confirmed}
             <b class="text-danger"> [+{district.delta.confirmed}]</b>{/if}</td>
