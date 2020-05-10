@@ -67,7 +67,7 @@
     }
     state_data = state_data.sort(sortByProperty('confirmed'))
     let res = await window.api('https://api.covid19india.org/zones.json')
-    let data = res.data.zones
+    let data = res.data.zones.filter((d)=>d.state===name)
     data.map(d => {
       (d.zone === 'Red') ? red++ : (d.zone === 'Orange') ? orange++ : (d.zone === 'Green') ? green++ : null
       zones[d.district] = d.zone
