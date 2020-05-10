@@ -1,8 +1,8 @@
 <script>
   import Overview from './Overview.svelte'
-
+  export let title
   export let name
-
+  title = name;
   let state_data = []
   let zones = {}
   let state_res
@@ -77,7 +77,7 @@
 
 </script>
 <div class="container-fluid mt-5">
-  <Overview title={name} overview={overview} lastupdatedtime={lastUpdateTime}/>
+  <Overview title="" overview={overview} lastupdatedtime={lastUpdateTime}/>
   <div class="h1 text-center mt-3 mb-3">Zones overview</div>
   <div class="row mb-3">
     <div class="col text-center">
