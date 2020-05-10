@@ -83,19 +83,19 @@
     <div class="col text-center">
       <span class="total badge badge-danger p-5">
         <h4 class="h4">{red}</h4>
-        {#if red}<h4 class="h4">{Math.round(red*10000/(red+orange+green))/100}</h4>{/if}
+        {#if red}<h4 class="h4">{Math.round(red*10000/(red+orange+green))/100}%</h4>{/if}
       </span>
     </div>
     <div class="col text-center">
       <span class="total badge orange p-5">
         <h4 class="h4">{orange}</h4>
-        {#if orange}<h4 class="h4">{Math.round(orange*10000/(red+orange+green))/100}</h4>{/if}
+        {#if orange}<h4 class="h4">{Math.round(orange*10000/(red+orange+green))/100}%</h4>{/if}
       </span>
     </div>
     <div class="col text-center">
       <span class="total badge badge-success p-5">
         <h4 class="h4">{green}</h4>
-        {#if green}<h4 class="h4">{Math.round(green*10000/(red+orange+green))/100}</h4>{/if}
+        {#if green}<h4 class="h4">{Math.round(green*10000/(red+orange+green))/100}%</h4>{/if}
       </span>
     </div>
   </div>

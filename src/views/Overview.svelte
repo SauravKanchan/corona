@@ -18,7 +18,7 @@
     <div class="col-md-12">
       <div class="row mb-3">
         <div class="col-md-12">
-          <h1 class="title h1 text-center">{#if flag}{#if flag[title]}{flag[title]["flag"]}{/if}{/if} {title}</h1>
+          <h1 class="h1 text-center ">{#if flag}{#if flag[title]}{flag[title]["flag"]}{/if}{/if} {title}</h1>
           <h3 class="h6 text-muted text-center">{#if lastupdatedtime}
             Last Update at {lastupdatedtime}{:else} &nbsp; {/if}</h3>
         </div>
