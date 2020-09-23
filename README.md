@@ -2,8 +2,11 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSauravKanchan%2Fcorona.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSauravKanchan%2Fcorona?ref=badge_shield)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/549a6859-c5d4-4141-8b8d-2016472f00e0/deploy-status)](https://app.netlify.com/sites/covin/deploys)
 
+# Screenshots
+![covid-1](/src/img/covid-1.png)
 
-Install the dependencies...
+
+### Install the dependencies...
 
 ```bash
 git clone https://github.com/SauravKanchan/corona.git
@@ -11,7 +14,7 @@ cd corona
 npm install
 ```
 
-Start the dev server...
+### Start the dev server...
 ```bash
 npm run dev
 ```
@@ -20,5 +23,5 @@ Navigate to [localhost:8080](http://localhost:8080). You should see your app run
 
 
 
-## License
+### License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSauravKanchan%2Fcorona.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FSauravKanchan%2Fcorona?ref=badge_large)
