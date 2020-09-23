@@ -3,7 +3,12 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/549a6859-c5d4-4141-8b8d-2016472f00e0/deploy-status)](https://app.netlify.com/sites/covin/deploys)
 
 # Screenshots
-![covid-1](/src/img/covid-1.png)
+|                                |                                 |
+| ------------------------------ | ------------------------------- |
+|![covid-1](/src/img/covid-1.png)| ![covid-2](/src/img/covid-2.png)|
+|![covid-3](/src/img/covid-3.png)| ![covid-4](/src/img/covid-4.png)|
+|![covid-5](/src/img/covid-5.png)| ![covid-6](/src/img/covid-6.png)|
+|![covid-7](/src/img/covid-7.png)| ![covid-8](/src/img/covid-8.png)|
 
 
 ### Install the dependencies...
